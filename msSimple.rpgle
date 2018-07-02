@@ -1,6 +1,6 @@
 <%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
-ctl-opt copyright('System & Method (C), 2016');
+ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
@@ -10,7 +10,7 @@ ctl-opt bndDir('NOXDB' );
 
   By     Date       PTF     Description
   ------ ---------- ------- ---------------------------------------------------
-  NLI    22.06.2016         New program
+  NLI    22.06.2018         New program
   ----------------------------------------------------------------------------- */
  /include noxDB
  /include qasphdr,iceUtility
@@ -81,131 +81,6 @@ end-proc;
 
 
 /* -------------------------------------------------------------------- *\ 
-   	The mother of all samples: hellow world
-       
-   	note the "action" can be either from the URL or by a selfcontained message:
-
-	dksrv206:60060/router?payload={
-		"action":"msSimple.HelloClarins",
-		"message" : "My name is John"
-	}
-
-	or by url:
-
-	dksrv206:60060/router/msSimple/HelloClarins?payload={
-		"message" : "My name is John"
-	}
-
-\* -------------------------------------------------------------------- */
-dcl-proc HelloClarins export;
-
-	dcl-pi *n pointer;
-		pInput 			pointer value;
-	end-pi;
-
-
-	dcl-s  pOutput   	pointer;
-	dcl-s  john 		int(10);
-	
-	john = 123; 
-
-    pOutput = json_newObject();
-
-    json_setStr(pOutput: 'text' : 'Hello Clarins world ');
-    json_setStr(pOutput: 'time' : %char(%timestamp()));
-	json_setStr(pOutput: 'message' : json_getStr(pInput : 'message'));
-	
-	return pOutput;
-
-end-proc;
-	
-
-
-/* -------------------------------------------------------------------- *\ 
-   	The mother of all samples: hellow world
-       
-	dksrv206:60060/router?payload={
-		"action":"msSimple.YX",
-		"message" : "Hej med jer"
-	}
-
-\* -------------------------------------------------------------------- */
-dcl-proc YX export;
-
-	dcl-pi *n pointer;
-		pInput 			pointer value;
-	end-pi;
-
-	dcl-s  pOutput   	pointer;
-	
-    pOutput = json_newObject();
-
-    json_setStr(pOutput: 'text' : 'Hello world');
-    json_setStr(pOutput: 'time' : %char(%timestamp()));
-	json_setStr(pOutput: 'message' : json_getStr(pInput : 'message'));
-	
-	return pOutput;
-
-end-proc;
-
-
-
-
-/* -------------------------------------------------------------------- *\ 
-   	The mother of all samples: hellow world
-       
-	dksrv206:60060/router?payload={
-		"action":"msSimple.per",
-		"message" : "My name is Per"
-	}
-
-\* -------------------------------------------------------------------- */
-dcl-proc per  export;
-
-	dcl-pi *n pointer;
-		pInput 			pointer value;
-	end-pi;
-
-	dcl-s  pOutput   	pointer;
-	
-    pOutput = json_newObject();
-
-    json_setStr(pOutput: 'text' : 'Hello world');
-    json_setStr(pOutput: 'time' : %char(%timestamp()));
-	json_setStr(pOutput: 'message' : json_getStr(pInput : 'message'));
-	
-	return pOutput;
-
-end-proc;
-
-
-/* -------------------------------------------------------------------- *\ 
-   	The mother of all samples: hellow world
-       
-	dksrv206:60060/router?payload={
-		"action":"msSimple.jeppe"
-	}
-
-\* -------------------------------------------------------------------- */
-dcl-proc jeppe export;
-
-	dcl-pi *n pointer;
-		pInput 			pointer value;
-	end-pi;
-
-	dcl-s  i 			int(10) static;
-	dcl-s  pOutput   	pointer;
-	
-    pOutput = json_newObject();
-
-	i += 1;
-    json_setInt(pOutput: 'i' : i);
-	
-	return pOutput;
-
-end-proc;
-
-/* -------------------------------------------------------------------- *\ 
    	returns sum of x and y
 
 	dksrv206:60060/router?payload={
@@ -265,6 +140,14 @@ dcl-proc divide export;
 	return pOutput;
 
 end-proc;
+/* -------------------------------------------------------------------- *\ 
+   	List products
+
+	dksrv206:60060/router?payload={
+		"action":"msSimple.products"
+	}
+
+\* -------------------------------------------------------------------- */
 dcl-proc products export;
 
 	dcl-pi *n pointer;

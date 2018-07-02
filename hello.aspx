@@ -1,15 +1,15 @@
 <%@ language="RPGLE"%>
 <%
-ctl-opt copyright('System & Method (C), 2016');
+ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello); 
 
 /* -----------------------------------------------------------------------------
 
-    CRTICEPGM STMF('/www/IceBreak-Samples/hello.aspx') SVRID(samples)
+    CRTICEPGM STMF('/www/IceBreak-Samples/hello.rpgle') SVRID(samples)
 
    	Send greetings as a JSON object
  
-	dksrv206:60060/hello.aspx?message=My name is John
+	dksrv206:60060/hello.rpgle?message=My name is John
 
 \* -------------------------------------------------------------------- */
 dcl-proc sayHello;

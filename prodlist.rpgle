@@ -1,16 +1,16 @@
 <%@ language="SQLRPGLE" " %>
 <%
-ctl-opt copyright('System & Method (C), 2016');
+ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0.') datEdit(*YMD.) main(produceList); 
 ctl-opt bndDir('ICEBREAK');
 exec sql set option commit=*NONE;
 /* -----------------------------------------------------------------------------
 
-    CRTICEPGM STMF('/www/IceBreak-Samples/prodList.aspx') SVRID(samples)
+    CRTICEPGM STMF('/www/IceBreak-Samples/prodList.rpgle') SVRID(samples)
 
    	Send a product list to a client
        
-	dksrv206:60060/prodList.aspx?search=silver
+	dksrv206:60060/prodList.rpgle?search=silver
     
 \* -------------------------------------------------------------------- */
 dcl-proc produceList;

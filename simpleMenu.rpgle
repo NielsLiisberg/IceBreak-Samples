@@ -1,6 +1,6 @@
 ﻿<%@ language="RPGLE" %>
 <%
-ctl-opt copyright('System & Method (C), 2017');
+ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 
 /*  -----------------------------------------------------------------------------
@@ -61,35 +61,35 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
                     "text": "Work with servers",
                     "leaf": true,
                     "icon": "/icebreak-admin/system/images/extjstree/server_earth.gif",
-                    "url": "/icebreak-admin/system/wrksvr.aspx"
+                    "url": "/icebreak-admin/system/wrksvr.rpgle"
                 },
                 {
                     "id": "MNU1.2",
                     "text": "Display current server",
                     "leaf": true,
                     "icon": "/icebreak-admin/system/images/extjstree/server_information.gif",
-                    "url": "/icebreak-admin/system/dspsvrinf.aspx"
+                    "url": "/icebreak-admin/system/dspsvrinf.rpgle"
                 },
                 {
                     "id": "MNU1.3",
                     "text": "Display all servers",
                     "leaf": true,
                     "icon": "/icebreak-admin/system/images/extjstree/server_view.gif",
-                    "url": "/icebreak-admin/system/dspallsvr.aspx"
+                    "url": "/icebreak-admin/system/dspallsvr.rpgle"
                 },
                 {
                     "id": "MNU1.4",
                     "text": "Display header",
                     "leaf": true,
                     "icon": "/icebreak-admin/system/images/extjstree/document_preferences.gif",
-                    "url": "/icebreak-admin/system/dsphdrinf.aspx"
+                    "url": "/icebreak-admin/system/dsphdrinf.rpgle"
                 },
                 {
                     "id": "MNU1.5",
                     "text": "<%= name %>",
                     "leaf": true,
                     "icon": "/icebreak-admin/system/images/extjstree/document_info.gif",
-                    "url": "/icebreak-admin/system/dspjoblog.aspx"
+                    "url": "/icebreak-admin/system/dspjoblog.rpgle"
                 }
             ]
         }

@@ -29,7 +29,7 @@ Now - From a IBMi menu prompt start the SSH deamon:
 ===> STRTCPSVR *SSHD
 ```
 
-Now back you ACS:
+Now back to your ACS:
 
 1) Click SSH Terminal in ACS
 
@@ -108,6 +108,12 @@ yum install curl
 ```
 
 Now you can compile it in vsCode with "Shift-Cmd-B"
+
+Before you run it you have to set the PATH environment for you job like:
+```
+PATH=/QOpenSys/pkgs/bin:$PATH
+```
+
 
 Have fun - and keep me posted :)
 

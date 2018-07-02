@@ -1,6 +1,6 @@
 <%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
-ctl-opt copyright('System & Method (C), 2016');
+ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
@@ -10,7 +10,7 @@ ctl-opt bndDir('NOXDB' );
 
   By     Date       PTF     Description
   ------ ---------- ------- ---------------------------------------------------
-  NLI    22.06.2016         New program
+  NLI    22.06.2018         New program
   ----------------------------------------------------------------------------- */
  /include noxDB
  /include qasphdr,iceUtility

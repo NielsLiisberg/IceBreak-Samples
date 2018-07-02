@@ -1,7 +1,7 @@
 <%@ free="*YES" language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
 /* ----------------------------------------------------------------------------------------
- * Copyright [2017] [System & Method A/S]                                          
+ * Copyright [2018] [System & Method A/S]                                          
  *                                                                                          
  * Licensed under the Apache License, Version 2.0 (the "License");                          
  * you may not use this file except in compliance with the License.                         
@@ -27,7 +27,7 @@
  *
  * By       Date       Task    Description                                                  
  * -------- ---------- ------- ------------------------------------------------------------ 
- * NLI      18.08.2017 0000000 New program 
+ * NLI      18.08.2018 0000000 New program 
  * 
  * Compile:
  
@@ -35,7 +35,7 @@
  
  * ---------------------------------------------------------------------------------------- */
 ctl-opt nomain; 
-ctl-opt copyright('System & Method (C), 2017');
+ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0,') datEdit(*YMD.); 
 ctl-opt bndDir('ICEBREAK' : 'EXTUTILITY');
 ctl-opt debug(*yes);
