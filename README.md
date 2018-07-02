@@ -76,9 +76,41 @@ Now it is time to test the sample:
 
 Now you have a RPG services running with an MVVM application in ExtJS as you frontend.
 
+# Using vsCode as you IDE
+The Sitemule team has made a cool plugin for vsCode so you can edit and compile RPG code.
+
+In your browser open, download and install both vsCode and node.js 
+
+https://code.visualstudio.com/download
+https://nodejs.org/en/
+
+When you open vsCode then:
+
+Open "Extensions" and search for "RPG".
+Click on "RPG for IBMi" and you have installed what you need.
+
+If you now map a networkdrive to the /www/IceBreak-samples folder and "drag" that into the vsCode editor - it will open it as workspace (a project) and now the Icebreak compiler is available.
+
+When you click and open a file with RPGLE or SQLRPGLE extension then you can press "Shift-Cmd-B" for build of find the build task in the menu.
+
 # Microservices
 In the samples above is as close as you can get with RPG to the Microservice architecture. It is build around a "router" program and a "JSON in/JSON out" service program. This design pattern hides the HTTP protocol so it can be used in stored procedures, data queues and even called directly from other RPG programs. This allows you to make unit test and let your RPG applications work better in a DevOps environment.
 
+
 # Consuming Services
+Take a look at msXlate.rpgle 
+This service is sending the request to Watson. Under the covers it uses cUrl so you have to installe that first:
+
+From the ssh / shell prompt:
+```
+PATH=/QOpenSys/pkgs/bin:$PATH
+yum install curl
+```
+
+Now you can compile it in vsCode with "Shift-Cmd-B"
+
+Have fun - and keep me posted :)
+
+
 
 
