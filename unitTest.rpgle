@@ -25,7 +25,7 @@ dcl-proc main;
 
 	dcl-s pInput        pointer;
 	dcl-s pOutput       pointer;
-    dcl-s errCount      int(10);
+	dcl-s errCount      int(10);
  
 	pInput = json_parseString ('{      -
 		"action":"msSimple.Hello",     -
@@ -34,16 +34,16 @@ dcl-proc main;
 
 	pOutput = runService (pInput);
 
-    // required output:
-    if json_getStr(pOutput:'message') <>
-        'My name is John';
-        fail(errCount: 'Invalid message': pInput: pOutPut);
-    endif;
+	// required output:
+	if json_getStr(pOutput:'message') <>
+		'My name is John';
+		fail(errCount: 'Invalid message': pInput: pOutPut);
+	endif;
 
-    logText( 
-        json_GetStr(pinput:'action') + 
-        ' Completed with : ' +  %char(errCount) + ' Errors'
-    );
+	logText( 
+		json_GetStr(pinput:'action') + 
+		' Completed with : ' +  %char(errCount) + ' Errors'
+	);
 
 	json_delete(pInput);
 	json_delete(pOutput);
@@ -55,17 +55,17 @@ end-proc;
 dcl-proc fail ;	
 
 	dcl-pi *n;
-        errCount int(10);
-        text varchar(256) value;
-        pIn pointer value; 
-        pOut pointer value;
+		errCount int(10);
+		text varchar(256) value;
+		pIn pointer value; 
+		pOut pointer value;
 	end-pi;
 
-    errCount += 1;
+	errCount += 1;
 
-    logText ('Error in' + text);
-    logJson  (pIn);
-    logJson (pOut);
+	logText ('Error in' + text);
+	logJson  (pIn);
+	logJson (pOut);
 
 end-proc;
 

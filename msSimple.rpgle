@@ -18,7 +18,7 @@ ctl-opt bndDir('NOXDB' );
 
 /* -------------------------------------------------------------------- *\ 
    	The mother of all samples: hellow world
-       
+	   
    	note the "action" can be either from the URL or by a selfcontained message:
 
 	dksrv206:60060/router?payload={
@@ -42,10 +42,10 @@ dcl-proc Hello export;
 	dcl-s  pOutput   	pointer;
 
 
-    pOutput = json_newObject();
+	pOutput = json_newObject();
 
-    json_setStr(pOutput: 'text' : 'Hello world ');
-    json_setStr(pOutput: 'time' : %char(%timestamp()));
+	json_setStr(pOutput: 'text' : 'Hello world ');
+	json_setStr(pOutput: 'time' : %char(%timestamp()));
 	json_setStr(pOutput: 'message' : json_getStr(pInput : 'message'));
 	
 	return pOutput;
@@ -101,11 +101,11 @@ dcl-proc sum export;
 	dcl-s  y      			int(10);
 
 
-    x = json_getnum(pInput : 'x');
-    y = json_getnum(pInput : 'y');
+	x = json_getnum(pInput : 'x');
+	y = json_getnum(pInput : 'y');
 
-    pOutput = json_newObject();
-    json_setInt(pOutput : 'sum' : x + y);
+	pOutput = json_newObject();
+	json_setInt(pOutput : 'sum' : x + y);
 
 	return pOutput;
 
@@ -131,11 +131,11 @@ dcl-proc divide export;
 	dcl-s  y      			int(10);
 
 
-    x = json_getnum(pInput : 'x');
-    y = json_getnum(pInput : 'y');
+	x = json_getnum(pInput : 'x');
+	y = json_getnum(pInput : 'y');
 
-    pOutput = json_newObject();
-    json_setInt(pOutput : 'divide' : x / y);
+	pOutput = json_newObject();
+	json_setInt(pOutput : 'divide' : x / y);
 
 	return pOutput;
 

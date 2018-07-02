@@ -131,7 +131,7 @@
 		The "pattern" is a regular expression match. The following match both maptest any place and and john in the begining.
 		The match is not casesensitive by default - but adding "casesensitive=true" changes that  
 		Note: No national charaters is supported in the match
-    -->
+	-->
 	<routing strict="false">
 		<map pattern="(router\/)" pgm="router" lib="*LIBL" />
 		<map pattern="(\/system\/snaponicon)" pgm="snaponicon" lib="*LIBL" />

@@ -56,7 +56,7 @@ dcl-proc getRows export;
 	dcl-s  limit  			int(10);
 
 
-    search  =  json_getStr(pInput : 'search');
+	search  =  json_getStr(pInput : 'search');
 	start   =  json_getNum(pInput : 'start' );
 	limit   =  json_getNum(pInput : 'limit' );
 
@@ -93,7 +93,7 @@ dcl-proc addOrderByClause;
 
 	dcl-s  sort  	   		varchar(4096);
 
-    sort    =  json_getStr(pInput : 'sort');
+	sort    =  json_getStr(pInput : 'sort');
 
 	// Concat the order by:
 	if sort > '';
@@ -118,7 +118,7 @@ dcl-proc addWhereClause;
 	dcl-s  pMeta 			pointer;
 	dcl-s  flds 			varchar(4096);
 
-    search =  json_getStr(pInput : 'search');
+	search =  json_getStr(pInput : 'search');
 	where  =  json_getStr(pInput : 'where');
 
 	// When the client has a "where" we simply use that 

@@ -17,8 +17,8 @@ ctl-opt bndDir('NOXDB' );
 /* -------------------------------------------------------------------- *\ 
    	translate text using watson API:
 
-	   https://watson-api-explorer.mybluemix.net/
-	    
+	https://watson-api-explorer.mybluemix.net/
+		
 	dksrv206:60060/router?payload={
 		"action": "msXlate.translate",
 		"source": "en",
@@ -38,15 +38,15 @@ dcl-proc translate export;
 	dcl-s  url  	  		varchar(1024);
 	dcl-s  text 	  		varchar(4096);
 
-    pReq = json_newObject();
-    json_copyValue (pReq : 'source'   : pInput : 'source');
-    json_copyValue (pReq : 'target'   : pInput : 'target');
+	pReq = json_newObject();
+	json_copyValue (pReq : 'source'   : pInput : 'source');
+	json_copyValue (pReq : 'target'   : pInput : 'target');
 	json_copyValue (pReq : 'text'     : pInput : 'text');
 
-    url = 'https://watson-api-explorer.mybluemix.net' +
+	url = 'https://watson-api-explorer.mybluemix.net' +
 		  '/language-translator/api/v2/translate';
-    
-    pOutput = json_httpRequest  (url: pReq);
+	
+	pOutput = json_httpRequest  (url: pReq);
 
 	json_delete(pReq);
 
@@ -54,7 +54,7 @@ dcl-proc translate export;
 	text = json_getStr(pOutput : 'translations[0].translation' : 'N/A');
 	setHeader ( '1-debug' : text);
 	
-    return (pOutput);
+	return (pOutput);
 
 end-proc;
 

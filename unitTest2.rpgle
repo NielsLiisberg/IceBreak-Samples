@@ -25,7 +25,7 @@ dcl-proc main;
 
 	dcl-s pInput        pointer;
 	dcl-s pOutput       pointer;
-    dcl-s errCount      int(10);
+	dcl-s errCount      int(10);
 	dcl-s msg           varchar(256);
  
 	pInput = json_parseString ('{      -
@@ -37,7 +37,7 @@ dcl-proc main;
 
 	pOutput = runService (pInput);
 
-    // required output:
+	// required output:
 	msg = json_getStr(pOutput : 'translations[0].translation');
 	logText(msg);
 
@@ -51,17 +51,17 @@ end-proc;
 dcl-proc fail ;	
 
 	dcl-pi *n;
-        errCount int(10);
-        text varchar(256) value;
-        pIn pointer value; 
-        pOut pointer value;
+		errCount int(10);
+		text varchar(256) value;
+		pIn pointer value; 
+		pOut pointer value;
 	end-pi;
 
-    errCount += 1;
+	errCount += 1;
 
-    logText ('Error in' + text);
-    logJson  (pIn);
-    logJson (pOut);
+	logText ('Error in' + text);
+	logJson  (pIn);
+	logJson (pOut);
 
 end-proc;
 

@@ -98,7 +98,7 @@ dcl-proc listMenuTitles export;
 		//json_setStr  (pItem : 'icon': '/system/images/extjstree/server.gif');
 		json_arrayPush(pMenu : pItem);
 	enddo;                           
-	                                 
+									 
 	json_delete(pRows);
 
 	return pMenu;               
@@ -244,7 +244,7 @@ dcl-proc searchMenuItems export;
 		json_copyValue  (pChild: 'link' : list.this :  'menuLink');
 		json_arrayPush( pChildren: pChild);
 	enddo;                           
-	                                 
+									 
 	json_delete(pRows);
 
 	return pMenu;               
