@@ -1,0 +1,67 @@
+
+<html>
+<head> 
+ <link rel="stylesheet" type="text/css" href="/System/Styles/IceBreak.css"/>
+ <link rel="stylesheet" type="text/css" href="/System/Skins/IceBreakAdmin/application.css" />
+</head>
+<div id="TitlePane">
+   <div id="TitlePane-Text">Welcome to IceBreak</div>
+</div>		
+<img src="/system/images/server_information32.gif" alt="Current server" class="TitlePaneIcon" />
+<p>&nbsp;</p>
+<p>Congratulations!! Now you have your first IceBreak server up and running. Now it is time to make it work for you.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>One of the key features is to use RPG (or any other ILE language) as a host language for running web application. The key concept is the server root path on the IFS and the application library where the program object is stored.</p>
+<p>&nbsp;</p>
+<p>If we first take a look at the server root path, then you will see something similar to:</p>
+<p>&nbsp;</p>
+
+<img width="381" height="274" src="/system/images/myfirst.png">
+<p>&nbsp;</p>
+<h2>The server root content:</h2>
+
+<h3>webConfig.xml</h3>
+<p>&nbsp;</p>
+<p>The webConfig.xml contains a list of runtime properties for the web application. Where to upload files, routing, hives among other advanced features. The features are described within the webConfig.xml.</p>
+<h3>&nbsp;</h3>
+<h3>Index.html</h3>
+<p>This is the file you are reading right now</p>
+<h3>&nbsp;</h3>
+<h3>intermediate</h3>
+<p>Is a folder for temporary data, it is a work folder for compiler, sessions, and images.</p>
+<p>&nbsp;</p>
+<h3>.vsCode</h3>
+<p>This is compiler support and development support for Microsoft vsCode environment. It is a free alternative to Microsoft Development studio. Please fell free to download it from here:</p>
+<p>&nbsp;</p>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<p>&nbsp;</p>
+<p>When installed then search for RPG in vsCode extensions to get full edit and compile support for ILE rpg.</p>
+<p>&nbsp;</p>
+<h3>system</h3>
+<p>
+The system folder contains shared resources between server instances along with system resources. Note: The system folder is a symbolic link to the /IceBreak/system folder, so do not delete any files with in it. Rather disable the system folder hive in the webconfig.xml file.
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>Next Step:</h2>
+Follow the programmers guide and make the first program
+<p>&nbsp;</p>
+Simply paste this into you editor, and save it as "hello.rpgle" on server root path.   
+<pre style="font-family:monospace;background-color:black;color:#89beed;margin-left:10px;margin-right:10px">
+<%@ language="RPGLE"%>
+<%
+ctl-opt main(sayHello); 
+dcl-proc sayHello;
+	
+    dcl-s  message      varchar(256);
+    
+    // Get the data from the URL
+    message = qryStr('message');
+
+    // Send the response back 
+    %>Hello world. <%= message %>, time is <%= %char(%timestamp())%><%
+
+end-proc;
+</pre>
+</html>

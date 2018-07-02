@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+	Note all xxx_ prefixed tags and attibutes are for ducumentation.
+	remove the xxx_ to make it effective  
+-->
+<configuration>
+
+	<!--
+		Run a series of commands - each line is a a separate system shell call, so line spanning is not allowed
+	 -->
+	<xxx_prestart>
+		SBMJOB CMD(CALL PGM(MYCLEANUP)) JOBQ(ICEBREAK/SVC)
+		MKDIR '/www/admin/hastobethere'
+	</xxx_prestart>
+	
+	<!-- 
+		The SSL tag controls the version of SSL or/and TLS used if the server is put in HTTPS mode:
+
+		protocolLevel:
+			0 : TLS with SSL Version 3.0 and SSL Version 2.0 compatibility
+			2 : SSL Version 2.0 only
+			3 : SSL Version 3.0 only - recommended
+			4 : TLS Version 1 only
+			5 : TLS Version 1 with SSL Version 3.0 compatibility
+	
+		timeout, wait timer in seconds: 
+			0 : Forever 
+	-->
+	<xxx_ssl 
+		protocolLevel="4" 
+		timeout="10"
+	/>
+
+	<!-- 
+		Any additional response headers required to make you application work. 
+		These headers are added for both static and dynamic responses ( bothe the webserver and the application server provide these headers
+	-->
+	<xxx_headers>
+		<var name="Access-Control-Allow-Origin"  		value="http://www.icebreak.org"/> 
+		<var name="Access-Control-Allow-Credentials"  	value="true"/> 
+		<var name="Access-Control-Expose-Headers"  		value="FooBar"/> 
+	</xxx_headers> 
+
+	<!--
+		The globalvar tag contains global constants you can access with the globalGetGetVar() on to of the dynamic get/set-globalvar 
+		This is a perfect spot for site configuration
+	 -->
+	<xxx_globalvar>
+		<var name="Company" value="System &amp; Method"/> 
+	</xxx_globalvar>
+	
+	<!--
+		The session tag handles the behavior of the application server:
+			The cookie attribute is extra parameters you can append for the session cookie.
+			The exitPgm API is called when a session is created and when it is terminated to let you control custom housekeeping
+			Se the ICEBREAK/QSAMPLE source file - ICESESSION for an example     
+	-->
+	<xxx_session 
+		exitPgm="SVCUDV/ICESESSION" 
+		cookie="Version=1; Path=/; Discard; secure; HttpOnly"
+		encrypt="true"
+		encryptionKey="Life is good"
+	/>
+	  
+	<!--
+		envvar is the ENVVAR for the application server job. If you utilize the RPG/JAVA instead of the IceBreak native java,
+		you can set up the RPG/JAVA classpath and propertylist here. Don't confuse this by the java tag whic is only for IceBreak native JVM.
+		Other envvar like PATH etc can be set here if you are using QSH, PASE or other unix like feature relying on environment vars.   
+	 -->  
+	<xxx_envvar>
+		<var name="CLASSPATH" value="/icebreak/java/IceBreakTools.jar"/> 
+		<var name="QIBM_RPG_JAVA_PROPERTIES" value="-Djava.awt.headless=true;-Djava.version=1.8;-Dos400.stderr=file:stderr.txt;"/> 
+	</xxx_envvar>
+
+	
+
+	<!--
+		Only needed if you need java in ICeBreak: 
+		The java tag controls the native IceBreak JVM. You need to set up the classpath where
+		your classes and jars can be found and also the version of java requires to run your java application
+		The JVM used is any of LIC-JVM's provide by your IBMi. For more information - Read the "IceBreak programmers guide" - java section   
+	-->
+	<xxx_java 
+		classpath="/www/systest/java/icebreaktest.jar"
+		version="1.8">
+		<property name="test" value="demo"/> 
+		<property name="t2"   value="zzz"/> 
+		<property name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/> 
+	</xxx_java>	
+	
+
+	<!--
+		The response content will be compressed if the size is greater the threshold limit and if the client supports the algorithme. 
+		There is a small performance penalty in the compression algorithme, so don't set the threshold to low ( less than 4K)   
+		GZIP is the supported compression algorithme 
+	-->
+	<contentEncoding
+		type="GZIP"
+		threshold="10000"
+		dontCompress="gif,jpeg,jpg,png"
+	/>	
+
+	<!--
+		The response content is by default windows-1252 for backward compatability reasons only. We suggest that you change it to UTF-8 
+		and use UTF-8 for both your source and templates. If you entire system is in UTF-8 you can even gain 
+		a performance boost by setting the "serveAlwaysUTF8" to true
+		NOTE: programs that use "setContentType(....)" overrides the defaultCharset at runtime.
+	-->
+	<content
+		defaultCharset="utf-8"
+		serveAlwaysUTF8="true"
+		serveAlwaysChunks="true"
+	/>	
+				
+	<!--
+		The upload tag describes a virtual path for the physical
+		target for any HTTP upload multipart mime and the http PUT method.  
+	-->
+	<xxx_upload allowPUT="true" putExitPgm="*LIBL/MYPUTPGM">
+		<map alias="upload"   path="/upload"/> <!-- upload goes to the IFS root "upload" folder"  -->
+		<map alias="dangerus" path="."/>       <!-- Never do this!! it uploads to the icebreak server root  -->
+		<map alias="superbad" path="/"/>       <!-- Never never do this!! it allows the user to access the total IFS  -->
+		<map alias="*" path="/tmp"/>           <!-- catch all - goes to /tmp -->
+	</xxx_upload>
+	
+
+	<!--
+		Routing is mapped regex patterns for applications an their coresponding program names.
+		When "strict=true" only applications from this list is served
+		The "routing" tag has higher precedence that "hives"
+		The "pattern" is a regular expression match. The following match both maptest any place and and john in the begining.
+		The match is not casesensitive by default - but adding "casesensitive=true" changes that  
+		Note: No national charaters is supported in the match
+    -->
+	<routing strict="false">
+		<map pattern="(router\/)" pgm="router" lib="*LIBL" />
+		<map pattern="(\/system\/snaponicon)" pgm="snaponicon" lib="*LIBL" />
+	</routing>
+
+	<xxx_routing strict="false">
+		<map pattern="maptest|^john" pgm="hello" lib="*LIBL" casesensitive="true"/>
+		<map pattern="testroute" pgm="hello" lib="*LIBL"/>
+		<map pattern="^images" pgm="scaleimage" lib="*LIBL"/>
+		<map pattern="^(\[|\{)" pgm="jsonrouter" lib="*LIBL"/>
+
+		<!--	<map pattern="^.*"    pgm="default" lib="*LIBL"/> -->
+	</xxx_routing>
+
+	<!--
+		Hives is virtual Paths and maps to the associated application library and library list.  
+		Good practice is to keep a special char (i.e. a dash) in the hive name so it will be confused by at physical path in the IFS 
+		Note: Is no "libl" is given then the library list from the jobdescription i used - This is good pratice.
+	-->
+	<xxx_hives>
+		<map   alias="my-develop"  path="/prj/icebreak/site" pgmSource="/prj/icebreak/site" lib="DEMO" />
+		<map   alias="demo-site"   dftdoc="index.html" path="/www/demo" lib="DEMO" libl="DEMO QGPL SYSTEST NORTHWIND" />
+	</xxx_hives>
+
+	<!-- 
+		mime types maps the files suffix with the content type required in the HTTP protocol. 
+		Also any file suffix can trigger the the activation of the application server - either as a 
+		program call, a service program procedure call or a java method call.
+		
+		Keep this list optimized with only used mime types in you application  ( don't bloat this list !!) 
+		Used but unlisted mime-types will occur as warnings in the joblog, and defauls will be given 
+	-->
+	<mimeTypes>
+		<map suffix="css"    contentType="text/css" />
+		<map suffix="jar"    contentType="application/java" />
+		<map suffix="js"     contentType="application/x-javascript" />
+		<map suffix="png"    contentType="image/png" />
+		<map suffix="gif"    contentType="image/gif" />
+		<map suffix="jpg"    contentType="image/jpeg" />
+		<map suffix="jpeg"   contentType="image/jpeg" />
+		<map suffix="html"   contentType="text/html" />
+		<map suffix="ico"    contentType="image/x-icon" />
+		<map suffix="asmx"   contentType="text/html" callType="SRVPGM"/>
+		<map suffix="aspx"   contentType="text/html" callType="PGM"/>
+		<map suffix="rpgle"  contentType="text/html" callType="PGM"/>
+		<map suffix="pgm"    contentType="text/html" callType="PGM"/>
+		<map suffix="asp"    contentType="text/html" callType="PGM"/>
+		<map suffix="pdf"    contentType="application/pdf" />
+	</mimeTypes>
+	
+</configuration>
+	
+	

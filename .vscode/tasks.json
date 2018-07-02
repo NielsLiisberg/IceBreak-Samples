@@ -1,0 +1,28 @@
+{
+    "version": "0.1.0",
+    "command": "node",
+    "args": [
+        "./.vscode/compile.js",
+        "userFile=${file}&format=list&source=${relativeFile}"
+    ],
+    "showOutput": "always",
+    "suppressTaskName": true,
+    "tasks": [
+        {
+            "taskName": "CRTICEPGM",
+            "isBuildCommand": true,
+            "problemMatcher": {
+                "owner": "rpgle",
+                "fileLocation": ["relative", "${workspaceRoot}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 4
+                }
+            }
+
+        }
+    ]
+}
