@@ -16,7 +16,6 @@
  * limitations under the License.                                                           
  * ---------------------------------------------------------------------------------------- 
  *                                                                                                                                                                                    
- * Company . . . : YX Denmark A/S                                  
  * Project . . . : IceBreak                                                                 
  * Design  . . . : Niels Liisberg, System & Method A/S - Sitemule                                                           
  * Function  . . : simple demo menu driver                                                  
@@ -32,7 +31,7 @@
  * 
  * Compile:
  
- 	CRTICEPGM STMF('/www/icetest/yxMenu.rpgle') 
+ 	CRTICEPGM STMF('/www/IceBreak-Samples/Menu.rpgle') 
  
  * ---------------------------------------------------------------------------------------- */
 ctl-opt nomain; 
