@@ -96,6 +96,10 @@ When you click and open a file with RPGLE or SQLRPGLE extension then you can pre
 # Microservices
 In the samples above is as close as you can get with RPG to the Microservice architecture. It is build around a "router" program and a "JSON in/JSON out" service program. This design pattern hides the HTTP protocol so it can be used in stored procedures, data queues and even called directly from other RPG programs. This allows you to make unit test and let your RPG applications work better in a DevOps environment.
 
+The "router" program is always called if the URL begins with "router". It is a regex set in the webconfig.xml. The router parses the URL, parse the input JSON and call the required service. Finally the router serializes the object graph into JSON for the HTTP client.
+
+Take a look at "router.rpgle" and "msProduct.rpgle" - they carry the whole secret!
+
 
 # Consuming Services
 Take a look at msXlate.rpgle 
