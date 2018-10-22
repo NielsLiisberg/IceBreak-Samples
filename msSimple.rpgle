@@ -21,14 +21,14 @@ ctl-opt bndDir('NOXDB' );
 	   
    	note the "action" can be either from the URL or by a selfcontained message:
 
-	dksrv206:60060/router?payload={
+	DKSRV133:60060/router?payload={
 		"action":"msSimple.Hello",
 		"message" : "My name is John"
 	}
 
 	or by url:
 
-	dksrv206:60060/router/msSimple/Hello?payload={
+	DKSRV133:60060/router/msSimple/Hello?payload={
 		"message" : "My name is John"
 	}
 
@@ -83,7 +83,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	returns sum of x and y
 
-	dksrv206:60060/router?payload={
+	DKSRV133:60060/router?payload={
 		"action":"msSimple.sum",
 		"x": 123,
 		"y": 456
@@ -113,7 +113,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	division - can it handle divide by zero? 
 
-	dksrv206:60060/router?payload={
+	DKSRV133:60060/router?payload={
 		"action":"msSimple.divide",
 		"x": 125,
 		"y": 5
@@ -143,7 +143,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	List products
 
-	dksrv206:60060/router?payload={
+	DKSRV133:60060/router?payload={
 		"action":"msSimple.products"
 	}
 

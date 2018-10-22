@@ -9,7 +9,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello);
 
    	Send greetings as a JSON object
  
-	dksrv206:60060/hello.rpgle?message=My name is John
+	DKSRV133:60060/hello.rpgle?message=My name is John
 
 \* -------------------------------------------------------------------- */
 dcl-proc sayHello;

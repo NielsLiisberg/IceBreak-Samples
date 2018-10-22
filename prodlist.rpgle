@@ -10,7 +10,7 @@ exec sql set option commit=*NONE;
 
    	Send a product list to a client
 	   
-	dksrv206:60060/prodList.rpgle?search=silver
+	DKSRV133:60060/prodList.rpgle?search=silver
 	
 \* -------------------------------------------------------------------- */
 dcl-proc produceList;

@@ -49,7 +49,7 @@ ctl-opt debug(*yes);
 
 	This is the top level: The MenuTitles
 
-	dksrv206:60060/router/menu/listMenuTitles?payload={
+	DKSRV133:60060/router/menu/listMenuTitles?payload={
 	}
 
  	-------------------------------------------------------------------- */
@@ -105,7 +105,7 @@ dcl-proc listMenuTitles export;
 
 end-proc;
 /*	-------------------------------------------------------------------- 
-	dksrv206:60060/router/menu/getItemsForMenu?payload={
+	DKSRV133:60060/router/menu/getItemsForMenu?payload={
 		"node" : "123#IBMI"
 	}
 
@@ -174,7 +174,7 @@ end-proc;
 	This it a comination - each titel and its coresponding items are 
 	joined together
 	
-	dksrv206:60060/router/menu/searchMenuItems?payload={
+	DKSRV133:60060/router/menu/searchMenuItems?payload={
 		"search" : "you"
 	}
 

@@ -12,7 +12,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
 	   
 	Run from the browser:
 
-	dksrv206:60060/simpleRest?manuid=SONY
+	DKSRV133:60060/simpleRest?manuid=SONY
 
 
 	Compile:
