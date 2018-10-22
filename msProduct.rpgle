@@ -20,14 +20,14 @@ ctl-opt bndDir('NOXDB' );
    	return a resulset from the SQL select 
 
 	// Rest style
-	dksrv206:60060/router/msProduct/getRows?payload={
+	dksrv133:60060/router/msProduct/getRows?payload={
 		"start": 11,
 		"limit": 20,
 		"search" : "sony"
 	}
 
 	// "seneca" style
-	dksrv206:60060/router?payload={
+	dksrv133:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -35,7 +35,7 @@ ctl-opt bndDir('NOXDB' );
 	}
 
 	// "seneca" style
-	dksrv206:60060/router?payload={
+	dksrv133:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -55,7 +55,6 @@ dcl-proc getRows export;
 	dcl-s  start  			int(10);
 	dcl-s  limit  			int(10);
 
-
 	search  =  json_getStr(pInput : 'search');
 	start   =  json_getNum(pInput : 'start' );
 	limit   =  json_getNum(pInput : 'limit' );
@@ -64,8 +63,6 @@ dcl-proc getRows export;
 		select * 
 		from product
 	`);
-
-
 
 	addWhereClause   ( sqlStmt : pInput);
 	addOrderByClause ( sqlStmt : pInput);
@@ -236,7 +233,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	Get the table metadata: columns and types
 
-	dksrv206:60060/router?payload={
+	dksrv133:60060/router?payload={
 		"action":"msProduct.getMetadata"
 	}
 
@@ -268,14 +265,14 @@ end-proc;
    	return a resulset from the SQL select 
 
 	// Rest style
-	dksrv206:60060/router/msProduct/getRows?payload={
+	dksrv133:60060/router/msProduct/getRows?payload={
 		"start": 11,
 		"limit": 20,
 		"search" : "sony"
 	}
 
 	// "seneca" style
-	dksrv206:60060/router?payload={
+	dksrv133:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -283,7 +280,7 @@ end-proc;
 	}
 
 	// "seneca" style
-	dksrv206:60060/router?payload={
+	dksrv133:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,

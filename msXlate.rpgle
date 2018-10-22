@@ -1,4 +1,4 @@
-<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
+<%@ free="true" language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
 ctl-opt copyright('System & Method (C), 2018');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
@@ -19,11 +19,10 @@ ctl-opt bndDir('NOXDB' );
 
 	https://watson-api-explorer.mybluemix.net/
 		
-	dksrv206:60060/router?payload={
-		"action": "msXlate.translate",
-		"source": "en",
-		"target": "es",
-		"text"  : "Good afternoon my friends"
+	dksrv133:60060/router?payload={
+		"action"  : "msXlate.translate",
+		"model_id": "en-es",
+		"text"    : "Good afternoon my friends"
 	}
 
 \* -------------------------------------------------------------------- */
@@ -37,23 +36,25 @@ dcl-proc translate export;
 	dcl-s  pReq   	  		pointer;
 	dcl-s  url  	  		varchar(1024);
 	dcl-s  text 	  		varchar(4096);
+	dcl-s  extraParms  		varchar(4096);
+	dcl-c  appkey  		    'xZiVLkVMPE7-ECxvEaJIbZ5nD4QS63bUM63ww-ZxXOi_w'; // <<< Put your applicaton key here
 
-	pReq = json_newObject();
-	json_copyValue (pReq : 'source'   : pInput : 'source');
-	json_copyValue (pReq : 'target'   : pInput : 'target');
-	json_copyValue (pReq : 'text'     : pInput : 'text');
-
-	url = 'https://watson-api-explorer.mybluemix.net' +
-		  '/language-translator/api/v2/translate';
+	pReq  = json_newObject();
 	
-	pOutput = json_httpRequest  (url: pReq);
+	json_copyValue (pReq : 'model_id' : pInput : 'model_id');
+	json_copyValue (pReq : 'text'     : pInput : 'text');
+	
+	url = 'https://gateway.watsonplatform.net/language-translator/api/v3/translate?version=2018-05-01';
+	
+	extraParms = '-k --user apikey:' + appkey;
+	pOutput = json_httpRequest  (url: pReq : extraParms);
 
 	json_delete(pReq);
 
 	// Just debug the response
 	text = json_getStr(pOutput : 'translations[0].translation' : 'N/A');
-	setHeader ( '1-debug' : text);
-	
+	consoleLog(text);
+
 	return (pOutput);
 
 end-proc;
