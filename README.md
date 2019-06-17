@@ -31,25 +31,19 @@ Now - From a IBMi menu prompt start the SSH deamon:
 
 Now back to your ACS:
 
-1) Click SSH Terminal in ACS
+1) Click SSH Terminal in ACS ( or use your default terminal like putty) 
 
 (or you can use call qp2term – but I suggest that you get use to ssh)
 
-From the ssh / shell prompt:
+2) From the terminal. You can also install git with yum from the commandline if you don't like the abowe:  
 ```
-PATH=/QOpenSys/pkgs/bin:$PATH
-cd /www
-git -c http.sslVerify=false clone https://github.com/NielsLiisberg/IceBreak-Samples.git
-```
-Note1: You have to ajust your path to use the YUM packages ( here git) 
-
-If you have already installed the YUM in ACS you can install git at the same prompt
-```
+ssh myibmi
 PATH=/QOpenSys/pkgs/bin:$PATH
 yum install git
 cd /www
 git -c http.sslVerify=false clone https://github.com/NielsLiisberg/IceBreak-Samples.git
 ```
+As you can see - you have to ajust your path to use the packages path to use YUM
 
 Go back to a 5250 prompt
 ```
