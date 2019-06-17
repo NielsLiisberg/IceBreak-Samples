@@ -72,7 +72,7 @@ CRTICEPGM STMF('/www/IceBreak-Samples/msProduct.rpgle') SVRID(samples)
 Now it is time to test the sample:
 
 1) Open your browser
-2) In the URL type  http://MyIbmi.60060  ( Where myibmi is the TCP/IP address or name of your IBiMi)
+2) In the URL type  http://MyIbmi:60060  ( Where myibmi is the TCP/IP address or name of your IBiMi)
 
 Now you have a RPG services running with an MVVM application in ExtJS as you frontend.
 
