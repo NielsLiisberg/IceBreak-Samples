@@ -1,28 +1,37 @@
 {
-    "version": "0.1.0",
-    "command": "node",
-    "args": [
-        "./.vscode/compile.js",
-        "userFile=${file}&format=list&source=${relativeFile}"
-    ],
-    "showOutput": "always",
-    "suppressTaskName": true,
-    "tasks": [
-        {
-            "taskName": "CRTICEPGM",
-            "isBuildCommand": true,
-            "problemMatcher": {
-                "owner": "rpgle",
-                "fileLocation": ["relative", "${workspaceRoot}"],
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "message": 4
-                }
-            }
-
-        }
-    ]
+	"version": "2.0.0",
+	"presentation": {
+		"echo": false,
+		"reveal": "never",
+		"focus": true,
+		"panel": "dedicated",
+		"showReuseMessage": true,
+		"clear": true
+	},
+	"tasks": [{
+		"label": "CRTICEPGM",
+		"type": "process",
+		"group": {
+			"kind": "build",
+			"isDefault": true
+		},
+		"command": "node",
+		"args": [
+			"./.vscode/compile.js",
+			"${file}",
+			"${relativeFile}",
+			"list"
+		],
+		"problemMatcher": {
+			"owner": "rpgle",
+			"fileLocation": ["relative", "${workspaceRoot}"],
+			"pattern": {
+				"regexp": "^(.*):(\\d+):(\\d+):\\s+(.*)$",
+				"file": 1,
+				"line": 2,
+				"column": 3,
+				"message": 4
+			}
+		}
+	}]
 }

@@ -1,6 +1,6 @@
 ﻿<%@ language="RPGLE" %>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 
 /*  -----------------------------------------------------------------------------
@@ -12,7 +12,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
 	   
 	Run from the browser:
 
-	DKSRV133:60060/simpleRest?manuid=SONY
+	http://sandbox.icebreak.org:60060/simpleRest?manuid=SONY
 
 
 	Compile:
@@ -21,7 +21,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
 
 	By     Date       PTF     Description
 	------ ---------- ------- ---------------------------------------------------
-	NLI    22.06.2018         New program
+	NLI    22.06.2019         New program
 	----------------------------------------------------------------------------- */
  /include noxDB
  /include qasphdr,iceUtility

@@ -27,7 +27,7 @@
  *
  * By       Date       Task    Description                                                  
  * -------- ---------- ------- ------------------------------------------------------------ 
- * NLI      18.08.2018 0000000 New program 
+ * NLI      18.08.2019 0000000 New program 
  * 
  * Compile:
  
@@ -35,7 +35,7 @@
  
  * ---------------------------------------------------------------------------------------- */
 ctl-opt nomain; 
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.); 
 ctl-opt bndDir('ICEBREAK' : 'EXTUTILITY');
 ctl-opt debug(*yes);
@@ -49,7 +49,7 @@ ctl-opt debug(*yes);
 
 	This is the top level: The MenuTitles
 
-	DKSRV133:60060/router/menu/listMenuTitles?payload={
+	http://sandbox.icebreak.org:60060/router/menu/listMenuTitles?payload={
 	}
 
  	-------------------------------------------------------------------- */
@@ -105,7 +105,7 @@ dcl-proc listMenuTitles export;
 
 end-proc;
 /*	-------------------------------------------------------------------- 
-	DKSRV133:60060/router/menu/getItemsForMenu?payload={
+	http://sandbox.icebreak.org:60060/router/menu/getItemsForMenu?payload={
 		"node" : "123#IBMI"
 	}
 
@@ -174,7 +174,7 @@ end-proc;
 	This it a comination - each titel and its coresponding items are 
 	joined together
 	
-	DKSRV133:60060/router/menu/searchMenuItems?payload={
+	http://sandbox.icebreak.org:60060/router/menu/searchMenuItems?payload={
 		"search" : "you"
 	}
 

@@ -1,6 +1,6 @@
 <%@ language="RPGLE"%>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello); 
 
 /* -----------------------------------------------------------------------------
@@ -9,7 +9,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello);
 
    	Send greetings as a JSON object
  
-	DKSRV133:60060/hello.rpgle?message=My name is John
+	http://sandbox.icebreak.org:60060/hello.rpgle?message=My name is John
 
 \* -------------------------------------------------------------------- */
 dcl-proc sayHello;
@@ -20,7 +20,7 @@ dcl-proc sayHello;
 	// Get the data from the URL
 	message = qryStr('message');
 
-	// Send the reeating back
+	// Send the response back to client in JSON format
 	setContentType('application/json;charset=utf-8');
 	%>{
 		"text" : "Hello world. <%= message %>, time is <%= %char(%timestamp())%>" 

@@ -1,6 +1,6 @@
 <%@ language="RPGLE" runasowner="*YES" owner="QPGMR"%>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
 
@@ -13,7 +13,7 @@ ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
    
    By     Date       PTF     Description
    ------ ---------- ------- ---------------------------------------------------
-   NLI    10.05.2018         New program
+   NLI    10.05.2019         New program
    ----------------------------------------------------------------------------- */
  /include noxdb 
  /include qasphdr,iceutility

@@ -1,6 +1,6 @@
 <%@ language="SQLRPGLE" " %>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0.') datEdit(*YMD.) main(produceList); 
 ctl-opt bndDir('ICEBREAK');
 exec sql set option commit=*NONE;
@@ -10,7 +10,7 @@ exec sql set option commit=*NONE;
 
    	Send a product list to a client
 	   
-	DKSRV133:60060/prodList.rpgle?search=silver
+	http://sandbox.icebreak.org:60060/prodList.rpgle?search=silver
 	
 \* -------------------------------------------------------------------- */
 dcl-proc produceList;

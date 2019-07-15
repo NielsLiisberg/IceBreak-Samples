@@ -1,6 +1,6 @@
 ﻿<%@ language="RPGLE" %>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 
 /*  -----------------------------------------------------------------------------
@@ -12,12 +12,12 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
 	   
 	Run from the browser:
 
-	http://192.168.5.206:60060/simpleMenu.rpgle
+	http://sandbox.icebreak.org:60060/simpleMenu.rpgle
 
 
 	By     Date       PTF     Description
 	------ ---------- ------- ---------------------------------------------------
-	MOP    04.04.2018         New program
+	MOP    04.04.2019         New program
 	----------------------------------------------------------------------------- */
 
  

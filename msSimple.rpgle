@@ -1,6 +1,6 @@
 <%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
@@ -10,7 +10,7 @@ ctl-opt bndDir('NOXDB' );
 
   By     Date       PTF     Description
   ------ ---------- ------- ---------------------------------------------------
-  NLI    22.06.2018         New program
+  NLI    22.06.2019         New program
   ----------------------------------------------------------------------------- */
  /include noxDB
  /include qasphdr,iceUtility
@@ -21,14 +21,14 @@ ctl-opt bndDir('NOXDB' );
 	   
    	note the "action" can be either from the URL or by a selfcontained message:
 
-	DKSRV133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msSimple.Hello",
 		"message" : "My name is John"
 	}
 
 	or by url:
 
-	DKSRV133:60060/router/msSimple/Hello?payload={
+	http://sandbox.icebreak.org:60060/router/msSimple/Hello?payload={
 		"message" : "My name is John"
 	}
 
@@ -83,7 +83,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	returns sum of x and y
 
-	DKSRV133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msSimple.sum",
 		"x": 123,
 		"y": 456
@@ -113,7 +113,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	division - can it handle divide by zero? 
 
-	DKSRV133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msSimple.divide",
 		"x": 125,
 		"y": 5
@@ -143,7 +143,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	List products
 
-	DKSRV133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msSimple.products"
 	}
 

@@ -1,6 +1,6 @@
 <%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
-ctl-opt copyright('System & Method (C), 2018');
+ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
@@ -10,7 +10,7 @@ ctl-opt bndDir('NOXDB' );
 
   By     Date       PTF     Description
   ------ ---------- ------- ---------------------------------------------------
-  NLI    22.06.2018         New program
+  NLI    22.06.2019         New program
   ----------------------------------------------------------------------------- */
  /include noxDB
  /include qasphdr,iceUtility
@@ -20,14 +20,14 @@ ctl-opt bndDir('NOXDB' );
    	return a resulset from the SQL select 
 
 	// Rest style
-	dksrv133:60060/router/msProduct/getRows?payload={
+	http://sandbox.icebreak.org:60060/router/msProduct/getRows?payload={
 		"start": 11,
 		"limit": 20,
 		"search" : "sony"
 	}
 
 	// "seneca" style
-	dksrv133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -35,7 +35,7 @@ ctl-opt bndDir('NOXDB' );
 	}
 
 	// "seneca" style
-	dksrv133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -233,7 +233,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	Get the table metadata: columns and types
 
-	dksrv133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msProduct.getMetadata"
 	}
 
@@ -265,14 +265,14 @@ end-proc;
    	return a resulset from the SQL select 
 
 	// Rest style
-	dksrv133:60060/router/msProduct/getRows?payload={
+	http://sandbox.icebreak.org:60060/router/msProduct/getRows?payload={
 		"start": 11,
 		"limit": 20,
 		"search" : "sony"
 	}
 
 	// "seneca" style
-	dksrv133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -280,7 +280,7 @@ end-proc;
 	}
 
 	// "seneca" style
-	dksrv133:60060/router?payload={
+	http://sandbox.icebreak.org:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
