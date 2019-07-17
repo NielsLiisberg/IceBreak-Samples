@@ -41,7 +41,7 @@ ssh myibmi
 PATH=/QOpenSys/pkgs/bin:$PATH
 yum install git
 ```
-And now i the same ssh session - clone the samples repo 
+And now in the same ssh session - clone the samples repo 
 ```
 cd /www
 git -c http.sslVerify=false clone https://github.com/NielsLiisberg/IceBreak-Samples.git
