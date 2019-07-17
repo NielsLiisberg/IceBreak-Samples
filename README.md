@@ -23,7 +23,7 @@ Before you can clone this git repo - you first need to have git on your IBMi:
 3) Open the "Available packages" tab
 4) Click "git" and "Install"
 
-Now - From a IBMi menu prompt start the SSH deamon:
+You need to ensure that the ssh deamon is running on your IBM i. So from a IBM i menu prompt start the SSH deamon:
 
 ```
 ===> STRTCPSVR *SSHD
@@ -35,15 +35,18 @@ Now back to your ACS:
 
 (or you can use call qp2term – but I suggest that you get use to ssh)
 
-2) From the terminal. You can also install git with yum from the commandline if you don't like the abowe:  
+2) From the terminal. You can also install git with yum from the commandline if you don't like the above:  
 ```
 ssh myibmi
 PATH=/QOpenSys/pkgs/bin:$PATH
 yum install git
+```
+And now i the same ssh session - clone the samples repo 
+```
 cd /www
 git -c http.sslVerify=false clone https://github.com/NielsLiisberg/IceBreak-Samples.git
 ```
-As you can see - you have to ajust your path to use the packages path to use YUM
+As you can see - you have to ajust your path to use yum, git and other opens source tooling  
 
 Go back to a 5250 prompt
 ```
@@ -55,7 +58,7 @@ ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples')
 STRICESVR SAMPLES
 WRKICESBS 
 ```
-You will see the samples' server running in the IceBreak subsystem. Now we need to compile some of the samples ( still in the 5250 with ICEBREAK on the library list):
+You will see the samples server running in the IceBreak subsystem. Now we need to compile some of the samples ( still in the 5250 with ICEBREAK on the library list):
 
 ```
 CRTICEPGM STMF('/www/IceBreak-Samples/router.rpgle') SVRID(samples)
@@ -76,6 +79,7 @@ The Sitemule team has made a cool plugin for vsCode so you can edit and compile 
 In your browser open, download and install both vsCode and node.js 
 
 https://code.visualstudio.com/download
+
 https://nodejs.org/en/
 
 When you open vsCode then:
@@ -96,21 +100,32 @@ Take a look at "router.rpgle" and "msProduct.rpgle" - they carry the whole secre
 
 
 # Consuming Services
-Take a look at msXlate.rpgle 
-This service is sending the request to Watson. Under the covers it uses cUrl so you have to installe that first:
+Take a look at msXlate.rpgle .This service is sending the request to Watson. Under the covers it uses cUrl so you have to installe that first:
 
 From the ssh / shell prompt:
 ```
 PATH=/QOpenSys/pkgs/bin:$PATH
 yum install curl
 ```
+Before you run the Watson example you have to set up two things: 
 
-Now you can compile it in vsCode with "Shift-Cmd-B"
+1) Get a application key from IBM / Watson: 
 
-Before you run it you have to set the PATH environment for you job like:
+https://cloud.ibm.com/docs/iam?topic=iam-manapikey
+
+2) Set the PATH environment for you job to include the opensource tooling - like:
+
+System wide once:
+
 ```
+ADDENVVAR 
+    ENVVAR(PATH) 
+    VALUE('/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin')
+    LEVEL(*SYS)                                                   
+```
+
+Or within the job
 PATH=/QOpenSys/pkgs/bin:$PATH
-```
 
 
 Have fun - and keep me posted :)
