@@ -20,6 +20,7 @@ dcl-proc sayHello;
 	// Get the data from the URL
 	message = qryStr('message');
 
+
 	// Send the response back to client in JSON format
 	setContentType('application/json;charset=utf-8');
 	%>{
