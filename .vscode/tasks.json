@@ -26,11 +26,12 @@
 			"owner": "rpgle",
 			"fileLocation": ["relative", "${workspaceRoot}"],
 			"pattern": {
-				"regexp": "^(.*):(\\d+):(\\d+):\\s+(.*)$",
+				"regexp": "^(.*):(\\d+):(\\d+):(.*):\\s+(.*)$",
 				"file": 1,
 				"line": 2,
 				"column": 3,
-				"message": 4
+				"severity": 4,
+				"message": 5
 			}
 		}
 	}]

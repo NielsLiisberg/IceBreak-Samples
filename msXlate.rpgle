@@ -20,7 +20,7 @@ ctl-opt bndDir('NOXDB' );
 
 	https://watson-api-explorer.mybluemix.net/
 		
-	http://sandbox.icebreak.org:60060/router?payload={
+	http://myibmi:60060/router?payload={
 		"action"  : "msXlate.translate",
 		"model_id": "en-es",
 		"text"    : "Good afternoon my friends"
