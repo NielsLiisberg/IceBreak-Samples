@@ -49,7 +49,7 @@ dcl-proc translate export;
 	dcl-s  url  	  		varchar(1024);
 	dcl-s  text 	  		varchar(4096);
 	dcl-s  extraParms  		varchar(4096);
-	dcl-c  appkey  		    'ZiVLkVMPE7-ECxvEaJIbZ5nD4QS63bUM63ww-ZxXOi_w'; // <<< Put your applicaton key here
+	dcl-c  appkey  		    'xxxxZiVLkVMPE7-ECxvEaJIbZ5nD4QS63bUM63ww-ZxXOi_w'; // <<< Put your applicaton key here
 
 	pReq  = json_newObject();
 	
