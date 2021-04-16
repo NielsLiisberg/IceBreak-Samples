@@ -1,14 +1,14 @@
-﻿**FREE
+**FREE
 // Until these are put in "threadsafe"
 
-Dcl-PR base64DecodeStr   VarChar(32767)  extproc(*CWIDEN:'Base64DecodeStr');                            
-   srcString             VarChar(32767) const options(*varsize);                               
+Dcl-PR base64DecodeStr   VarChar(32767)  ccsid (65535) extproc(*CWIDEN:'Base64DecodeStr');                            
+   srcString             VarChar(32767) ccsid (65535) const options(*varsize);                               
    srcCCSID                  Uns(5:0) value options(*nopass);        // Optional: the source   
    dstCCSID                  Uns(5:0) value options(*nopass);        // Optional: the EBCDIC   
 End-PR;                                                                                        
                                                                                                
-Dcl-PR base64EncodeStr   VarChar(32767)  extproc(*CWIDEN:'Base64EncodeStr');                            
-   srcString             VarChar(32767) const options(*varsize);                               
+Dcl-PR base64EncodeStr   VarChar(32767)  ccsid (65535) extproc(*CWIDEN:'Base64EncodeStr');                            
+   srcString             VarChar(32767) ccsid (65535) const options(*varsize);                               
    srcCCSID                  Uns(5:0) value options(*nopass);        // Optional: the ASCII    
    dstCCSID                  Uns(5:0) value options(*nopass);        // Optional: the output   
 End-PR;                                                                                        

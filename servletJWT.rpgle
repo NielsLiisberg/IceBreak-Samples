@@ -86,6 +86,9 @@ ctl-opt thread(*CONCURRENT);
 //
 // Here we validate a JWT token, and only if OK it will continu the call to applicatinserver ( pool) 
 //
+// You can place this JWT used here is directly into i.e. Postman:
+//   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.dKe7hfqSDavMTEN7WghKk3vlhEieEufgQzXRZzBtTFw
+//
 // --------------------------------------------------------------------------------------------------------------
 dcl-proc validateJWT export;
 
@@ -96,6 +99,10 @@ dcl-proc validateJWT export;
 
 	dcl-s  jwt 	varchar(8000);
 	dcl-s  p   	int(5);
+	dcl-s  ok	ind;
+	dcl-s  secret 	varchar(256);
+	
+	secret = 'aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd';
 
 	jwt = req_header ( req : 'Authorization');
 	if jwt = ''; 
@@ -103,9 +110,9 @@ dcl-proc validateJWT export;
 		return *ON; // break flow
 	endif;
 
-	// skip the Bearer
+	// skip the Bearer ( don't care if it being with B or b)
 	jwt = %triml(jwt);
-	p = %scan ('earer' : %triml(jwt));
+	p = %scan ('earer' : jwt);
 	if p <= 0; 
 		res_setStatus ( res : '401 no Bearer in jwt token provided');
 		return *ON; // break flow
@@ -113,13 +120,18 @@ dcl-proc validateJWT export;
 
 	jwt = %triml(%subst (jwt : p +6 ));
 
+	ok = jwt_verify (jwt:secret);
+	if not ok; 
+		res_setStatus ( res : '401 jwt token is invalid or expired');
+		return *ON; // break flow
+	endif;
 
 	// *OFF: Continue the normal server flow
 	// *ON : Dont continue,  break the flow - we have served what is need
 	return *OFF;
 
 end-proc;
-
+// --------------------------------------------------------------------------------------------------------------
 ///
 // ILEastic : JWT Service Program
 //

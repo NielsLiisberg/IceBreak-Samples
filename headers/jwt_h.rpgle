@@ -1,4 +1,4 @@
-﻿**FREE
+**FREE
 
 /if defined (JWT)
 /eof
