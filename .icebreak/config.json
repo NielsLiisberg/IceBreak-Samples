@@ -1,6 +1,6 @@
 {
-	"profile":"*YourIBMiuserid",
-	"targetLibrary":"*YourIBMiWorkingLibrary",
+	"profile":"NLI",
+	"targetLibrary":"NLI",
 	"teamToken":"TGl2ZXQgZXIgZW4gZ2F2ZQ==",
 	"serverId":"SAMPLES",
 	"serverUrl":"http://192.168.5.206:60060",

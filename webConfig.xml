@@ -170,6 +170,10 @@
 		teamToken="TGl2ZXQgZXIgZW4gZ2F2ZQ=="
 	/>
 
+	<plugin>
+        <map function="preRequest"  pgm="servletJWT" lib="*LIBL" proc="validateJWT"/>
+	</plugin>
+
 	<!-- 
 		mime types maps the files suffix with the content type required in the HTTP protocol. 
 		Also any file suffix can trigger the the activation of the application server - either as a 
