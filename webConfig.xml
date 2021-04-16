@@ -154,7 +154,21 @@
 	<xxx_hives>
 		<map   alias="my-develop"  path="/prj/icebreak/site" pgmSource="/prj/icebreak/site" lib="DEMO" />
 		<map   alias="demo-site"   dftdoc="index.html" path="/www/demo" lib="DEMO" libl="DEMO QGPL SYSTEST NORTHWIND" />
-	</xxx_hives>
+    </xxx_hives>
+
+	<!-- 
+		Teamwork support is used with git / and DevOps tooling. It will produce a .icebreak folder in the
+		the server root and also update the vsCode task list with build tools to alow users to compile in 
+		an private space on the local dist and automatiall upload had syncronize to at private 
+		IFS location and library for the user.
+
+		The Team token is the "ticket" clients need in their teamwork config to allow 
+		updalod as syncronization. Any non-blank string is valid - here a deafault base64 ticket is provided
+
+	-->
+	<teamwork 
+		teamToken="TGl2ZXQgZXIgZW4gZ2F2ZQ=="
+	/>
 
 	<!-- 
 		mime types maps the files suffix with the content type required in the HTTP protocol. 
