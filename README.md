@@ -6,11 +6,12 @@ IceBreak is a powerful Web application server that provides a highly reliable, m
 # Install IceBreak
 First you need the IceBreak server for RPG / ILE. You can download the latest stable community edition from the official site:
 
-http://www.system-method.com/en/page/download-icebreakce
+https://www.system-method.com/download-icebreakce
 
 Or you can find the bleeding edge versions here:
 
-http://download.icebreak.org/webfiles/download/icebreak/ 
+http://webfiles.system-method.com/download/IceBreak/?C=M;O=D
+
 
 You need FTP open on your IBM and the install script runs only from Windows.
 
