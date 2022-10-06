@@ -61,8 +61,6 @@ dcl-proc getRows export;
 	dcl-s  start  			int(10);
 	dcl-s  limit  			int(10);
 
-	p =123;
-	
 	search  =  json_getStr(pInput : 'search');
 	start   =  json_getNum(pInput : 'start' );
 	limit   =  json_getNum(pInput : 'limit' );
