@@ -4,6 +4,5 @@
     "grunt.autoDetect": "off",
     "jake.autoDetect": "off",
     "gulp.autoDetect": "off",
-    "npm.autoDetect": "off",
-    "cSpell.enabled": true
+    "npm.autoDetect": "off"
 }
