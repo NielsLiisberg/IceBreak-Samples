@@ -1,6 +1,6 @@
 <%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 <%
-ctl-opt copyright('System & Method (C), 2019');
+ctl-opt copyright('System & Method (C), 2019-2022');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
@@ -18,6 +18,12 @@ ctl-opt bndDir('NOXDB' );
 
 /* -------------------------------------------------------------------- *\ 
    	return a resulset from the SQL select 
+
+	use the the IceBreak sandbox or configure your host table to have MY_IBM_I
+
+	Note the "payload" parameter on the URL is a IceBreak shortcut 
+	for a HTTP POST with the same payload.
+	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
 
 	// Rest style
 	http://sandbox.icebreak.org:60060/router/msProduct/getRows?payload={
@@ -55,6 +61,7 @@ dcl-proc getRows export;
 	dcl-s  start  			int(10);
 	dcl-s  limit  			int(10);
 
+	p =123;
 	
 	search  =  json_getStr(pInput : 'search');
 	start   =  json_getNum(pInput : 'start' );
@@ -262,54 +269,4 @@ dcl-proc getMetadata export;
 
 end-proc;
 
-/* -------------------------------------------------------------------- *\ 
-   	return a resulset from the SQL select 
-
-	// Rest style
-	http://sandbox.icebreak.org:60060/router/msProduct/getRows?payload={
-		"start": 11,
-		"limit": 20,
-		"search" : "sony"
-	}
-
-	// "seneca" style
-	http://sandbox.icebreak.org:60060/router?payload={
-		"action":"msProduct.getRows",
-		"start": 11,
-		"limit": 20,
-		"search" : "sony"
-	}
-
-	// "seneca" style
-	http://sandbox.icebreak.org:60060/router?payload={
-		"action":"msProduct.getRows",
-		"start": 11,
-		"limit": 20,
-		"where" : "price > 200",
-		"sort"  : "price"
-	}
-\* -------------------------------------------------------------------- */
-dcl-proc list export;
-
-	dcl-pi *n pointer;
-		pInput 				pointer value;
-	end-pi;
-
-	dcl-s  pResultSet     	pointer;
-	dcl-s  sqlStmt        	varchar(4096);
-
-	sqlStmt = (`
-		select * 
-		from product
-	`);
-
-
-	pResultSet = json_sqlResultSet   (
-		sqlStmt
-	);
-
-
-	return pResultSet;
-
-end-proc;
 
