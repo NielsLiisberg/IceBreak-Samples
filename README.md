@@ -18,7 +18,7 @@ You need FTP open on your IBM and the install script runs only from Windows.
 You have two options: VSCode centric or IBM i centric
 
 1. [Clone the repo from VSCode and run the **createServer.sh** script](#Install-the-samples-via-VSCode)
-2. Install git on the IBM i and clone the repo from IBM i and run the CL commands show later. 
+2. [Install git on the IBM i and clone the repo from IBM i and run the CL commands show later.](#Install-the-samples-via-IBM-i)
 
 In the end you will have the same result - it is just a matter of taste.
 ___
