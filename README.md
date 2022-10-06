@@ -17,8 +17,8 @@ You need FTP open on your IBM and the install script runs only from Windows.
 # Install the samples
 You have two options: VSCode centric or IBM i centric
 
-1. Clone the repo from VSCode and runt the **createServer.sh** script
-2. Install git on the IBM i and clone the repo from IBM i and run the CL commands below. 
+1. [Clone the repo from VSCode and run the **createServer.sh** script](#Install%20the%20samples%20via%20VSCode)
+2. Install git on the IBM i and clone the repo from IBM i and run the CL commands show later. 
 
 In the end you will have the same result - it is just a matter of taste.
 ___
@@ -36,11 +36,11 @@ You need to ensure that the ssh daemon is running on your IBM i. So from a IBM i
 3. Map a drive pointing to your IBM i IFS. Mine is called MY_IBM_I in the following. I use root here where I have made a folder called **/www**    
 4. From the VSCode "Explorer window" in a empty project - select the big "clone repository" button. https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository
 5. When prompted for the repo name please enter: https://github.com/NielsLiisberg/IceBreak-Samples.git
-6. Now - when prompted, enter the location of the mapped drive from step 3.
+6. Now - when prompted, enter the location of the mapped drive from step 3. For me that was **/www**
 7. When the clone process is finished then the "Explorer" window in VSCode will show all the example programs you can play with. 
 8. To configure and start you sample server - run this command from the VSCode **New Terminal** window: ```ssh MY_IBM_I "/www/icebreak-samples/createServer.sh";```     
 9. When the script completes, it will show you a list of all active server. Among these you will have the **SAMPLES** IceBreak server listening on port 60060 ready to play with.
-10. Open you browser and enter: http://MY_IBM_I:60060 and the first application will appear. However - no data ?? Your service-layer wil first be made in a moment..  
+10. Open you browser and enter: [http://MY_IBM_I:60060](http://MY_IBM_I:60060) and the first application will appear. However - no data ?? Your service-layer wil first be made in a moment..  
 11. Before you start editing the examples, please install the VSCode extension **"RPG for IBM i"** 
 
 
@@ -62,7 +62,7 @@ The installation is ready, however the data was missing in our example. now it i
 7. You will see the "msProduct.rpgle" / "OK compile of /www/icebreak-samples/msProduct.rpgle for server SAMPLES" with a blue info icon to the left.
 8. If not... Click on the error icon and it will bring you to the "PROBLEM" in the code. It will place the cursor on the line with error and show the compiler error associated with that line.
 9. Fix the error - and press <CTRL-b> for build again - continue from step 3.
-10. Not errors? Great !! Click on the search icon in the browser applicatin you have running at http://MY_IBM_I:60060 
+10. Not errors? Great !! Click on the search icon in the browser applicatin you have running at [http://MY_IBM_I:60060](http://MY_IBM_I:60060) 
 11. We have a service running !! Now examine all the other examples. Some treasures are hidden there ;) 
 
 
