@@ -6,7 +6,7 @@ IceBreak is a powerful Web application server that provides a highly reliable, m
 # Install IceBreak
 First you need the IceBreak server for RPG / ILE. You can download the latest stable community edition from the official site:
 
-https://www.system-method.com/download-icebreakce
+https://www.system-method.com/en/download-icebreakce
 
 Or you can find the bleeding edge versions here:
 
