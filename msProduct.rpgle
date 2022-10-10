@@ -19,21 +19,22 @@ ctl-opt bndDir('NOXDB' );
 /* -------------------------------------------------------------------- *\ 
    	return a resulset from the SQL select 
 
-	use the the IceBreak sandbox or configure your host table to have MY_IBM_I
+	use the the IceBreak sandbox at "sandbox.icebreak.org"
+	or configure your host table to have MY_IBM_I
 
 	Note the "payload" parameter on the URL is a IceBreak shortcut 
 	for a HTTP POST with the same payload.
 	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
 
 	// Rest style
-	http://sandbox.icebreak.org:60060/router/msProduct/getRows?payload={
+	http://MY_IBM_I:60060/router/msProduct/getRows?payload={
 		"start": 11,
 		"limit": 20,
 		"search" : "sony"
 	}
 
 	// "seneca" style
-	http://sandbox.icebreak.org:60060/router?payload={
+	http://MY_IBM_I:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
@@ -41,7 +42,7 @@ ctl-opt bndDir('NOXDB' );
 	}
 
 	// "seneca" style
-	http://sandbox.icebreak.org:60060/router?payload={
+	http://MY_IBM_I:60060/router?payload={
 		"action":"msProduct.getRows",
 		"start": 11,
 		"limit": 20,
