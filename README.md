@@ -39,18 +39,23 @@ You need to ensure that the ssh daemon is running on your IBM i. So from a IBM i
 5. When prompted for the repo name please enter: https://github.com/NielsLiisberg/IceBreak-Samples.git
 6. Now - when prompted, enter the location of the mapped drive from step 3. For me that was **/www**
 7. When the clone process is finished then the "Explorer" window in VSCode will show all the example programs you can play with. 
-8. To configure and start you sample server - run this command from the VSCode **New Terminal** window: ```ssh MY_IBM_I "/www/icebreak-samples/createServer.sh";```     
+8. To configure and start you sample server - run this command from the VSCode **New Terminal** window: 
+
+```ssh MY_IBM_I "/www/icebreak-samples/createServer.sh";```
+
+9. OR from 5250 you can do the same:
+
+```ICEBREAK/ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples') SVRPORT(60060) HTTPPATH('/www/icebreak-samples') WWWDFTDOC('default.html') ```
+
+```ICEBREAK/STRICESVR SAMPLES```
+
+```ICEBREAK/WRKICESBS```
+
 9. When the script completes, it will show you a list of all active server. Among these you will have the **SAMPLES** IceBreak server listening on port 60060 ready to play with.
 10. Open you browser and enter: [http://MY_IBM_I:60060](http://MY_IBM_I:60060) and the first application will appear. However - no data ?? Your service-layer will first be made in a moment..  
 11. Before you start editing the examples, please install the VSCode extension **"RPG for IBM i"** 
 
 
-The **createServer.sh** simply run the following CL commands:
-```
-ICEBREAK/ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples') SVRPORT(60060) HTTPPATH('/www/icebreak-samples') WWWDFTDOC('default.html') 
-ICEBREAK/STRICESVR SAMPLES
-ICEBREAK/WRKICESBS
-```
 The installation is ready, however the data was missing in our example. Now it is time to compile the service that provides the data store for our web-application:
 
 

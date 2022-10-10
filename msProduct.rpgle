@@ -67,7 +67,7 @@ dcl-proc getRows export;
 
 	sqlStmt = (`
 		select * 
-		from product
+		from icproduct
 	`);
 
 	addWhereClause   ( sqlStmt : pInput);

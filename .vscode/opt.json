@@ -1,6 +1,6 @@
 {
 	"id":"SAMPLES",
-	"server":"http://dksrv134:60060",
+	"server":"http://dksrv133:60060",
 	"env":"ICEBREAK",
 	"path":"/www/icebreak-samples"
 }
