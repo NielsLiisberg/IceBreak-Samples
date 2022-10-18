@@ -10,7 +10,7 @@ Ext.application({
 	],
 	cfg: {
 		title: "Microservice Demo",
-		router: "/router.rpgle",
+		router: "/router",
 		routes: {
 			meta     : {action:'MSproduct.getMetaData'},
  			getRows  : {action:'MSproduct.getRows'},

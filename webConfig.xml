@@ -133,8 +133,8 @@
 		Note: No national charaters is supported in the match
 	-->
 	<routing strict="false">
-		<map pattern="(router\/)" pgm="router" lib="*LIBL" />
-		<map pattern="(\/system\/snaponicon)" pgm="snaponicon" lib="*LIBL" />
+		<map pattern="^\/router[\/\?]" pgm="router" lib="*libl" />
+		<map pattern="\/system\/snaponicon" pgm="snaponicon" lib="*LIBL" />
 	</routing>
 
 	<xxx_routing strict="false">
@@ -170,9 +170,9 @@
 		teamToken="TGl2ZXQgZXIgZW4gZ2F2ZQ=="
 	/>
 
-	<plugin>
+	<xxx_plugin>
         <map function="preRequest"  pgm="servletJWT" lib="*LIBL" proc="validateJWT"/>
-	</plugin>
+	</xxx_plugin>
 
 	<!-- 
 		mime types maps the files suffix with the content type required in the HTTP protocol. 
