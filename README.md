@@ -6,24 +6,98 @@ IceBreak is a powerful Web application server that provides a highly reliable, m
 # Install IceBreak
 First you need the IceBreak server for RPG / ILE. You can download the latest stable community edition from the official site:
 
-http://www.system-method.com/en/page/download-icebreakce
+https://www.system-method.com/en/download-icebreakce
 
 Or you can find the bleeding edge versions here:
 
-http://download.icebreak.org/webfiles/download/icebreak/ 
+http://webfiles.system-method.com/download/IceBreak/?C=M;O=D
+
 
 You need FTP open on your IBM and the install script runs only from Windows.
 
 # Install the samples
+You have two options: VSCode centric or IBM i centric
 
-Before you can clone this git repo - you first need to have git on your IBMi:
+1. [Clone the repo from VSCode and run the **createServer.sh** script](#Install-the-samples-via-VSCode)
+2. [Install git on the IBM i and clone the repo from IBM i and run the CL commands show later.](#Install-the-samples-via-IBM-i)
+
+In the end you will have the same result - it is just a matter of taste.
+___
+## Install the samples via VSCode
+
+You need to ensure that the ssh daemon is running on your IBM i. So from a IBM i menu prompt start the SSH daemon. You also need a ssh client on your PC - If not, please continue with *Install the samples via IBM i*  :
+
+```
+===> STRTCPSVR *SSHD
+```
+
+
+1. First install VSCode if you don't have it yet.
+2. Ensure that VSCode is configured to have a git client: https://code.visualstudio.com/docs/sourcecontrol/overview
+3. Map a drive pointing to your IBM i IFS. Mine is called MY_IBM_I in the following. I use root here where I have made a folder called **/www**    
+4. From the VSCode "Explorer window" in a empty project - select the big "clone repository" button. https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository
+5. When prompted for the repo name please enter: https://github.com/NielsLiisberg/IceBreak-Samples.git
+6. Now - when prompted, enter the location of the mapped drive from step 3. For me that was **/www**
+7. When the clone process is finished then the "Explorer" window in VSCode will show all the example programs you can play with. 
+8. To configure and start you sample server - run this command from the VSCode **New Terminal** window: 
+
+```ssh MY_IBM_I "/www/icebreak-samples/createServer.sh";```
+
+9. OR from 5250 you can do the same:
+
+```ICEBREAK/ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples') SVRPORT(60060) HTTPPATH('/www/icebreak-samples') WWWDFTDOC('default.html') ```
+
+```ICEBREAK/STRICESVR SAMPLES```
+
+```ICEBREAK/WRKICESBS```
+
+9. When the script completes, it will show you a list of all active server. Among these you will have the **SAMPLES** IceBreak server listening on port 60060 ready to play with.
+10. Open you browser and enter: [http://MY_IBM_I:60060](http://MY_IBM_I:60060) and the first application will appear. However - no data ?? Your service-layer will first be made in a moment..  
+11. Before you start editing the examples, please install the VSCode extension **"RPG for IBM i"** 
+
+
+The installation is ready, however the data was missing in our example. Now it is time to compile the service that provides the data store for our web-application:
+
+
+1. Open the the source **msProduct.rpgle** by double clicking the name in the VSCode "Explorer" window.
+2. The source for **msProduct.rpgle**  will now appear in editor window.
+3. If you press: Build. That is ```CTRL-b (win)``` OR ```Command-B (mac)```  OR click ```View->Command Palette->Build->Build: Run Build Task``` then the *IceBreak build system* kicks in.
+4. Now select the ```IceBreak Compile From IFS to application library``` will appear. Select that.
+5. In the status bar ( the bottom left of the VSCode screen) You can see The number of **Warning, Info and Errors** in the code.
+6. Clicking  **Warning, Info and Errors** will bring up the *"PROBLEMS"* window.
+7. You will see the ```msProduct.rpgle" / "OK compile of /www/icebreak-samples/msProduct.rpgle for server SAMPLES``` with a blue info icon to the left.
+8. If not... Click on the error icon and it will bring you to the *"PROBLEM"* in the code. It will place the cursor on the line with error and show the compiler error associated with that line.
+9. Fix the error - and press <CTRL-b> for build again. That is step 3.
+10. Not errors? Great !! Click on the search icon in the browser application you already have running at [http://MY_IBM_I:60060](http://MY_IBM_I:60060) 
+11. We have a service running !! Now examine all the other examples. Perhaps some treasures are hidden there ;) 
+
+
+... Hey wait a minute!! When i look in the *browser console network trace* - it refers to a resource called **router** - is this a magic word? 
+
+No! magic perhaps, but it actually the IceBreak Just In Time (JIT) compiler that behind the scenes compiles the router code because the IBM i object does not exists for that source - or the source code is  modified AFTER the object was created. 
+
+Please fell free to open and edit the **router.rpgle**. This is an esential part of microservices.   
+
+Perhaps it is time to look at the documentation. The admin-server also provides that: [http://MY_IBM_I:7000](http://MY_IBM_I:7000)  or skip to the section [Run the first sample](#Run-the-first-sample) that covers the above in more details.
+
+
+
+Happy IceBreak coding.
+
+*Niels Liisberg.*
+
+
+___
+## Install the samples via IBM i
+
+Before you can clone this git repo - you first need to have git on your IBM i:
 
 1) Open ACS and click on "Tools"
 2) Click on "Open Source Package Management"
 3) Open the "Available packages" tab
 4) Click "git" and "Install"
 
-You need to ensure that the ssh deamon is running on your IBM i. So from a IBM i menu prompt start the SSH deamon:
+You need to ensure that the ssh daemon is running on your IBM i. So from a IBM i menu prompt start the SSH daemon:
 
 ```
 ===> STRTCPSVR *SSHD
@@ -37,7 +111,7 @@ Now back to your ACS:
 
 2) From the terminal. You can also install git with yum from the commandline if you don't like the above:  
 ```
-ssh myibmi
+ssh MY_IBM_I
 PATH=/QOpenSys/pkgs/bin:$PATH
 yum install git
 ```
@@ -69,27 +143,27 @@ CRTICEPGM STMF('/www/IceBreak-Samples/msProduct.rpgle') SVRID(samples)
 Now it is time to test the sample:
 
 1) Open your browser
-2) In the URL type  http://MyIbmi:60060  ( Where myibmi is the TCP/IP address or name of your IBiMi)
+2) In the URL type [http://MY_IBM_I:60060](http://MY_IBM_I:60060)  Where MY_IBM_I is the TCP/IP address or name of your IBM i. Or even add the name MY_IBM_I to your ```hosts``` file on your PC 
+[Edit host file](https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/)
 
 Now you have a RPG services running with an MVVM application in ExtJS as you frontend.
 
-# Using vsCode as you IDE
-The Sitemule team has made a cool plugin for vsCode so you can edit and compile RPG code.
+# Using VSCode as you IDE
+The Sitemule team has made a cool plugin for VSCode so you can edit and compile RPG code.
 
-In your browser open, download and install both vsCode and node.js 
+In your browser open, download and install VSCode 
 
 https://code.visualstudio.com/download
 
-https://nodejs.org/en/
 
-When you open vsCode then:
+When you open VSCode then:
 
 Open "Extensions" and search for "RPG".
-Click on "RPG for IBMi" and you have installed what you need.
+Click on "RPG for IBM i" and you have installed what you need.
 
-If you now map a networkdrive to the /www/IceBreak-samples folder and "drag" that into the vsCode editor - it will open it as workspace (a project) and now the Icebreak compiler is available.
+If you now map a network drive to the /www/IceBreak-samples folder and "drag" that into the VSCode editor - it will open it as workspace (a project) and now the IceBreak compiler is available.
 
-When you click and open a file with RPGLE or SQLRPGLE extension then you can press "Shift-Cmd-B" for build of find the build task in the menu.
+When you click and open a file with RPGLE or SQLRPGLE extension then you can press "Shift-Cmd-B" for build. Or find the build task in the menu.
 
 # Microservices
 In the samples above is as close as you can get with RPG to the Microservice architecture. It is build around a "router" program and a "JSON in/JSON out" service program. This design pattern hides the HTTP protocol so it can be used in stored procedures, data queues and even called directly from other RPG programs. This allows you to make unit test and let your RPG applications work better in a DevOps environment.
@@ -100,7 +174,7 @@ Take a look at "router.rpgle" and "msProduct.rpgle" - they carry the whole secre
 
 
 # Consuming Services
-Take a look at msXlate.rpgle .This service is sending the request to Watson. Under the covers it uses cUrl so you have to installe that first:
+Take a look at msXlate.rpgle .This service is sending the request to Watson. Under the covers it uses cUrl so you have to installed that first:
 
 From the ssh / shell prompt:
 ```
