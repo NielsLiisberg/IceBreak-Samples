@@ -8,9 +8,12 @@ exec sql set option commit=*NONE;
 
 	CRTICEPGM STMF('/www/IceBreak-Samples/listProd.rpgle') SVRID(samples)
 
-   	Send a product list to a client
+   	Send a product list to a client using plain old SQL. 
+	Perhaps look at NoxDb for a more cool solution. 
 	   
 	http://sandbox.icebreak.org:60060/listProd.rpgle?search=silver
+	http://my_ibm_i:60060/listProd.rpgle?search=silver
+	
 	
 \* -------------------------------------------------------------------- */
 dcl-proc produceList;

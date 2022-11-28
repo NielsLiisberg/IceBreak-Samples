@@ -8,8 +8,9 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello);
 	CRTICEPGM STMF('/www/IceBreak-Samples/hello.rpgle') SVRID(samples)
 
    	Send greetings as a JSON object
- 
-	http://sandbox.icebreak.org:60060/hello.rpgle?message=My name is John
+
+	http://sandbox.icebreak.org:60060/hello.rpgle?message=My%20name%20is%20John
+	http://my_ibm_i:60060/hello.rpgle?message=My%20name%20is%20John
 
 \* -------------------------------------------------------------------- */
 dcl-proc sayHello;

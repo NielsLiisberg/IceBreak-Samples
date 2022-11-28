@@ -49,8 +49,8 @@ ctl-opt debug(*yes);
 
 	This is the top level: The MenuTitles
 
-	http://sandbox.icebreak.org:60060/router/menu/listMenuTitles?payload={
-	}
+	http://sandbox.icebreak.org:60060/router/menu/listMenuTitles?payload={}
+	http://my_ibm_i:60060/router/menu/listMenuTitles?payload={}
 
  	-------------------------------------------------------------------- */
 dcl-proc listMenuTitles export;
