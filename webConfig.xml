@@ -133,7 +133,7 @@
 		Note: No national charaters is supported in the match
 	-->
 	<routing strict="false">
-		<map pattern="^\/router[\/\?]" pgm="router" lib="*libl" />
+		<map pattern="^\/router[\/\?]" pgm="router" lib="*LIBL" />
 		<map pattern="\/system\/snaponicon" pgm="snaponicon" lib="*LIBL" />
 	</routing>
 

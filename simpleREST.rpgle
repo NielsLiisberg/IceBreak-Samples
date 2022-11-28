@@ -13,6 +13,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
 	Run from the browser:
 
 	http://sandbox.icebreak.org:60060/simpleRest?manuid=SONY
+	http://my_ibm_i:60060/simpleRest?manuid=SONY
 
 
 	Compile:
@@ -42,7 +43,7 @@ dcl-proc main;
 	// Note:  strQuot to protect agains SQL-injections
 	sqlStr = (`
 		select * 
-		from product 
+		from icproduct 
 		where manuId = ${ strQuot(manuId)}
 		order by Desc
 	`);

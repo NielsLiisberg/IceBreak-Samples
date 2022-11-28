@@ -2,23 +2,27 @@
 <%
 /* -------------------------------------------------------------------------------- *\
 
+	Super simple web 1.0 CURD application...
+
 	Public test:
 
-    http://portfolio.icebreak.org/samples/web1dot0.rpgle
+	http://sandbox.icebreak.org:60060/web1dot0
+	http://my_ibm_i:60060/web1dot0
+
     
 \* -------------------------------------------------------------------------------- */
 ctl-opt decEdit(*jobrun) datEdit(*YMD) main(main); 
 ctl-opt bndDir('ICEBREAK');
 
 dcl-f updFile  
-	extdesc('PRODUCT') 
+	extdesc('ICPRODUCT') 
 	extfile(*extdesc) 
 	usage(*input : *update: *output : *delete)
 	rename(PRODUCTR:updRec);
 
 dcl-f listFile  
 	disk(*ext) 
-	extdesc('PRODUCT') 
+	extdesc('ICPRODUCT') 
 	keyed 
 	infds(InfoDS) 
 	usage(*input)

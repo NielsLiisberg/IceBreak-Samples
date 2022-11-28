@@ -61,6 +61,7 @@ dcl-proc getRows export;
 	dcl-s  search 	   		varchar(4096);
 	dcl-s  start  			int(10);
 	dcl-s  limit  			int(10);
+ 
 
 	search  =  json_getStr(pInput : 'search');
 	start   =  json_getNum(pInput : 'start' );
@@ -170,7 +171,7 @@ dcl-proc update export;
 	// update using object as the row 
 	// Note: we can use templates for the key                                             
 	err = json_sqlUpsert (                                                        
-		'product'                	  // table name                                     
+		'icproduct'                	  // table name                                     
 		:pRow                  	      // row in object form {a:1,b:2} etc..             
 		:'where prodkey = $prodkey'   // Where clause ( you can omit the "where" )      
 		:pRow                         // object containing the key              
@@ -200,7 +201,7 @@ dcl-proc ensureKey;
 	if json_getNum ( pInput : 'prodkey') =0;
 		pTemp = json_sqlResultRow ('-  
 			select max(prodkey) + 10  as prodkey-
-			from product -
+			from icproduct -
 		');
 		json_copyvalue (pInput: 'prodkey' : pTemp: 'prodkey');
 		json_delete (pTemp);
@@ -224,7 +225,7 @@ dcl-proc delete export;
 
 	// delete using input object as the template data
 	err = json_sqlExec (                                                        
-		'Delete from product where prodkey = $key'   // Where clause ( you can omit the "where" )      
+		'Delete from icproduct where prodkey = $key'   // Where clause ( you can omit the "where" )      
 		:pInput                                      // object containing the key              
 	);                                                                            	
 
@@ -257,7 +258,7 @@ dcl-proc getMetadata export;
 	
 	pMeta = json_sqlGetMeta  ('-
 		select * - 
-		from product -
+		from icproduct -
 	');
 
 	// Add which column is the primary key
