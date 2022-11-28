@@ -9,8 +9,12 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello);
 
    	Send greetings as a JSON object
 
-	http://sandbox.icebreak.org:60060/hello.rpgle?message=My%20name%20is%20John
-	http://my_ibm_i:60060/hello.rpgle?message=My%20name%20is%20John
+	Showcase: 
+		- Block comment   : https://ibm-power-systems-cc.ideas.ibm.com/ideas/IBMI-I-1577
+		- Render engine
+
+	http://sandbox.icebreak.org:60060/hello1.rpgle?message=My%20name%20is%20John
+	http://my_ibm_i:60060/hello1.rpgle?message=My%20name%20is%20John
 
 \* -------------------------------------------------------------------- */
 dcl-proc sayHello;
@@ -21,8 +25,9 @@ dcl-proc sayHello;
 	// Get the data from the URL
 	message = qryStr('message');
 
-
 	// Send the response back to client in JSON format
+	// Here we use the render engine directly. 
+	// Usefull - but not recomended. Rather use noxDb JSON feature ( it is build in)    
 	setContentType('application/json;charset=utf-8');
 	%>{
 		"text" : "Hello world. <%= message %>, time is <%= %char(%timestamp())%>" 
