@@ -1,5 +1,6 @@
 ﻿<%@ language="RPGLE" %>
 <%
+**free
 ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 

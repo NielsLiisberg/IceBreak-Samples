@@ -20,7 +20,7 @@ dcl-proc produceList;
 
 	dcl-s  search       varchar(256);
 	dcl-s  comma        varchar(1);
-	dcl-ds product      extname ('PRODUCT') qualified end-ds;
+	dcl-ds product      extname ('ICPRODUCT') qualified end-ds;
 	
   
 	// we are providing JSON for the client
@@ -31,7 +31,7 @@ dcl-proc produceList;
 
 	exec sql declare c1 cursor for
 		select * 
-		from product
+		from icproduct
 		where lower(desc) like lower (:search);
 
 	exec sql open c1;
