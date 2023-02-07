@@ -17,8 +17,8 @@ dcl-proc main;
 
     if getServerVar('REQUEST_METHOD') = 'POST';
         upload();
-    elseif reqStr('retrivefile') > '';
-        retriveFile();
+    elseif reqStr('retrieveFile') > '';
+        retrieveFile();
     else;
         showUploadForm();
     endif;
@@ -26,24 +26,24 @@ dcl-proc main;
 end-proc;
 
  /* ------------------------------------------------------------------------------
-    if we have a GET ?retrivefile=TheFileToRetrive the we returns that
+    if we have a GET ?retrieveFile=TheFileToRetrive the we returns that
     ------------------------------------------------------------------------------ */
-dcl-proc retriveFile;
+dcl-proc retrieveFile;
 
     dcl-s includeFile  varchar(256);
     dcl-s mimeType     varchar(256);
     dcl-s errorMessage varchar(256);
     dcl-s pResponse     pointer; 
 
-    // Anywhere protectede on the IFS 
-    includeFile = '/uploads/' + reqStr('retrivefile');
+    // Anywhere protected on the IFS 
+    includeFile = '/uploads/' + reqStr('retrieveFile');
     mimeType = getMimeType(includeFile);
 
     setContentType(mimeType);
-    setCacheTimeOut(60); // This file will ba avaiable for one minute ( never set it to zero)
+    setCacheTimeOut(60); // This file will be available for one minute ( never set it to zero)
 
     // Load the stream file into the response object and chunk it out the the client
-    // If an error occurs, you can return a JOSN object or set the response status
+    // If an error occurs, you can return a JSON object or set the response status
     errorMessage  = include(includeFile); 
     if errorMessage > '';
         setCacheTimeOut(0); // Never cacnhe real application data 
@@ -61,7 +61,7 @@ on-exit;
     json_delete(pResponse);
 end-proc;
  /* ------------------------------------------------------------------------------
-    Do the upload from multipart mime to the secire IFS location
+    Do the upload from multipart mime to the secure IFS location
     ------------------------------------------------------------------------------ */
 dcl-proc upload;
 
@@ -96,7 +96,7 @@ dcl-proc upload;
             if rename( localname :finalname) = 0;
                 json_setBool (pFile : 'success' : *ON );
                 // A link to open the file - just for the test: 
-                json_setStr (pFile : 'link'  : getHeader('Referer') + '?retrivefile=' + remotename);
+                json_setStr (pFile : 'link'  : getHeader('Referer') + '?retrieveFile=' + remotename);
             else; 
                 json_setBool (pFile : 'success' : *OFF);
                 json_setStr  (pFile : 'message' : getLastError('*MSGTXT'));
