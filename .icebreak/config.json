@@ -3,7 +3,7 @@
 	"targetLibrary":"*YourIBMiWorkingLibrary",
 	"teamToken":"TGl2ZXQgZXIgZW4gZ2F2ZQ==",
 	"serverId":"SAMPLES",
-	"serverUrl":"http://dksrv133:60060",
-	"environment":"ICEBREAK",
+	"serverUrl":"http://192.168.5.206:60060",
+	"environment":"SVCUDV",
 	"path":"/www/icebreak-samples"
 }
