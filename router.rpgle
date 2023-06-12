@@ -26,14 +26,12 @@ dcl-proc main;
 	dcl-s pPayload       pointer;
 
 	pPayload = unpackParms();
-	if pPayload <> *NULL;
-		if json_nodeType(pPayload) = JSON_ARRAY;
-			processTransactions(pPayload);
-		else;
-			processAction(pPayload);
-		endif;
-		cleanup(pPayload);
+	if json_nodeType(pPayload) = JSON_ARRAY;
+		processTransactions(pPayload);
+	else;
+		processAction(pPayload);
 	endif;
+	cleanup(pPayload);
 	return;
 
 end-proc;
@@ -118,11 +116,14 @@ dcl-proc unpackParms;
 		pPayload = json_ParseString(reqStr('payload'));
 	elseif getServerVar('REQUEST_METHOD') = 'POST';
 		pPayload = json_ParseRequest();
+		if pPayload = *NULL;
+			pPayload = json_newObject(); // just an empty object;
+		endif;
 	else;
 		pPayload = *NULL;
 	endif;
 
-	if json_error(pPayload);
+	if pPayload = *NULL;
 		msg = json_message(pPayload);
 		%>{ "text": "Microservices. Ready for transactions. Please POST payload in JSON", "desc": "<%= msg %>"}<%
 		return *NULL;

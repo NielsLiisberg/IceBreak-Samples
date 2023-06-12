@@ -45,7 +45,7 @@ You need to ensure that the ssh daemon is running on your IBM i. So from a IBM i
 
 9. OR from 5250 you can do the same:
 
-```ICEBREAK/ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples') SVRPORT(60060) HTTPPATH('/www/icebreak-samples') WWWDFTDOC('default.html') ```
+```ICEBREAK/ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples') SVRPORT(60060) HTTPPATH('/www/icebreak-samples') WWWDFTDOC('default.html') DISPTHRMTH(*MULTITHREAD)```
 
 ```ICEBREAK/STRICESVR SAMPLES```
 
@@ -128,7 +128,7 @@ GO ICEBREAK
 CALL QCMD
 ADDICESVR SVRID(SAMPLES) TEXT('IceBreak samples') 
     SVRPORT(60060) HTTPPATH('/www/icebreak-samples') 
-    WWWDFTDOC('default.html')          
+    WWWDFTDOC('default.html') DISPTHRMTH(*MULTITHREAD)         
 STRICESVR SAMPLES
 WRKICESBS 
 ```

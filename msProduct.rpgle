@@ -15,6 +15,37 @@ ctl-opt bndDir('NOXDB' );
  /include noxDB
  /include qasphdr,iceUtility
 
+/* -------------------------------------------------------------------- *\ 
+   	return a resulset from the SQL select 
+
+	use the the IceBreak sandbox at "sandbox.icebreak.org"
+	or configure your host table to have MY_IBM_I
+
+	Note the "payload" parameter on the URL is a IceBreak shortcut 
+	for a HTTP POST with the same payload.
+	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
+
+	// Rest style
+	http://MY_IBM_I:60060/router/msProduct/simple?payload={}
+
+	
+\* -------------------------------------------------------------------- */
+dcl-proc simple export;
+
+	dcl-pi *n pointer;
+		pJsonInput 			pointer value;
+	end-pi;
+
+	dcl-s  pJsonOutput     	pointer;
+    
+    pJsonOutput = json_sqlResultSet('-
+		select *         -
+		from icproduct    -
+	');
+
+	return pJsonOutput;
+
+end-proc;
 
 /* -------------------------------------------------------------------- *\ 
    	return a resulset from the SQL select 
