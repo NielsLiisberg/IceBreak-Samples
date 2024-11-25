@@ -123,28 +123,20 @@
 		<map alias="*" path="/tmp"/>           <!-- catch all - goes to /tmp -->
 	</xxx_upload>
 	
-
-	<!--
-		Routing is mapped regex patterns for applications an their coresponding program names.
+	<!-- 
+	Routing is mapped regex patterns for applications and their corresponding program names.
 		When "strict=true" only applications from this list is served
-		The "routing" tag has higher precedence that "hives"
-		The "pattern" is a regular expression match. The following match both maptest any place and and john in the begining.
-		The match is not casesensitive by default - but adding "casesensitive=true" changes that  
-		Note: No national charaters is supported in the match
+		The "routing" tag has higher precedence than "hives"
+		The "pattern" is a regular expression match. 
+		The following matches both "/system/snaponicon"  in any place and "/router/" in the beginning.		
+		The match is not case-sensitive by default - but adding "casesensitive=true" changes that  
+		Note: No national characters are supported in the match
 	-->
 	<routing strict="false">
 		<map pattern="^\/router[\/\?]" pgm="router" lib="*LIBL" />
 		<map pattern="\/system\/snaponicon" pgm="snaponicon" lib="*LIBL" />
 	</routing>
 
-	<xxx_routing strict="false">
-		<map pattern="maptest|^john" pgm="hello" lib="*LIBL" casesensitive="true"/>
-		<map pattern="testroute" pgm="hello" lib="*LIBL"/>
-		<map pattern="^images" pgm="scaleimage" lib="*LIBL"/>
-		<map pattern="^(\[|\{)" pgm="jsonrouter" lib="*LIBL"/>
-
-		<!--	<map pattern="^.*"    pgm="default" lib="*LIBL"/> -->
-	</xxx_routing>
 
 	<!--
 		Hives is virtual Paths and maps to the associated application library and library list.  
@@ -154,7 +146,7 @@
 	<xxx_hives>
 		<map   alias="my-develop"  path="/prj/icebreak/site" pgmSource="/prj/icebreak/site" lib="DEMO" />
 		<map   alias="demo-site"   dftdoc="index.html" path="/www/demo" lib="DEMO" libl="DEMO QGPL SYSTEST NORTHWIND" />
-    </xxx_hives>
+	</xxx_hives>
 
 	<!-- 
 		Teamwork support is used with git / and DevOps tooling. It will produce a .icebreak folder in the
