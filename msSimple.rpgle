@@ -28,7 +28,7 @@ ctl-opt bndDir('NOXDB' );
 
 	or by url:
 
-	http://sandbox.icebreak.org:60060/router/msSimple/Hello?payload={
+	http://my_ibm_i:60060/router/msSimple/Hello?payload={
 		"message" : "My name is John"
 	}
 

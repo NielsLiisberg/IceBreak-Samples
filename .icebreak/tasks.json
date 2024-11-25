@@ -35,7 +35,7 @@
 			}
 		}
 	},{
-		"label": "IceBreak complie from local disk to user library",
+		"label": "IceBreak compile from local disk to user library",
 		"type": "process",
 		"group": {
 			"kind": "build",
