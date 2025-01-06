@@ -5,7 +5,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello);
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
 
-	CRTICEPGM STMF('/www/IceBreak-Samples/hello2.rpgle') SVRID(samples)
+	CRTICEPGM STMF('/www/IceBreak-Samples/hello3.rpgle') SVRID(samples)
 
    	Send greetings as a JSON object
 
@@ -15,8 +15,8 @@ ctl-opt bndDir('NOXDB' );
 		noxDb
 
  
-	http://sandbox.icebreak.org:60060/hello2.rpgle?message=My%20name%20is%20John
-	http://my_ibm_i:60060/hello2.rpgle?message=My%20name%20is%20John
+	http://sandbox.icebreak.org:60060/hello3.rpgle?message=My%20name%20is%20John
+	http://my_ibm_i:60060/hello3.rpgle?message=My%20name%20is%20John
 
 \* -------------------------------------------------------------------- */
 /include noxDB
