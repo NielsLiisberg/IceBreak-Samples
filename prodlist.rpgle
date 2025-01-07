@@ -9,6 +9,7 @@ exec sql set option commit=*NONE;
 	CRTICEPGM STMF('/www/IceBreak-Samples/prodList.rpgle') SVRID(samples)
 
    	Send a product list to a client
+	Perhaps look at NoxDb for a more cool solution. 
 	   
 	http://sandbox.icebreak.org:60060/prodList.rpgle?search=silver
 	http://my_ibm_i:60060/prodList.rpgle?search=silver

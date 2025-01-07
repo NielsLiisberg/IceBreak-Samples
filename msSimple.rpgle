@@ -29,7 +29,7 @@ ctl-opt bndDir('NOXDB' );
 	or by url:
 
 	http://my_ibm_i:60060/router/msSimple/Hello?payload={
-		"message" : "My name is John"
+		"message":"My name is John"
 	}
 
 \* -------------------------------------------------------------------- */
@@ -44,9 +44,10 @@ dcl-proc Hello export;
 
 	pOutput = json_newObject();
 
-	json_setStr(pOutput: 'text' : 'Hello world ');
-	json_setStr(pOutput: 'time' : %char(%timestamp()));
-	json_setStr(pOutput: 'message' : json_getStr(pInput : 'message'));
+	json_setStr  (pOutput: 'text' : 'Hello world ');
+	json_setDate (pOutput: 'date' : %date());
+	json_setTime (pOutput: 'time' : %time());
+	json_setStr  (pOutput: 'message' : json_getStr(pInput : 'message'));
 	
 	return pOutput;
 
