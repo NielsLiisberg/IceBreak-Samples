@@ -19,21 +19,12 @@ ctl-opt bndDir('NOXDB' );
 /* -------------------------------------------------------------------- *\ 
    	The mother of all samples: hellow world
 	   
-   	note the "action" can be either from the URL or by a selfcontained message:
-
-	http://sandbox.icebreak.org:60060/router?payload={
-		"action":"msSimple.Hello",
-		"message" : "My name is John"
-	}
-
-	or by url:
-
 	http://my_ibm_i:60060/router/msSimple/Hello?payload={
 		"message":"My name is John"
 	}
 
 \* -------------------------------------------------------------------- */
-dcl-proc Hello export;
+dcl-proc HelloWim export;
 
 	dcl-pi *n pointer;
 		pInput 			pointer value;
@@ -52,39 +43,10 @@ dcl-proc Hello export;
 	return pOutput;
 
 end-proc;
-// --------------------------------------------------------------------
-/** 
-   	Convert any positive integer to packed decimal for the command 
-   	processor. The input can be int,packed, zoned, float.
-
-   	@parm  input 	any positive interger value
-	@parm  packLen 	any uneven number: 1, 3, 5, 7, 9, ...
-	@return 		string in format:  x'0012345F' for strPack(12345:7)
-   	
-*/
-// --------------------------------------------------------------------
-dcl-proc strPack; 
-
-	dcl-pi *n varchar(32);
-		input 			int(20) value;
-		packlen  		int(5) value;
-	end-pi;
-
-	dcl-s	temp 		varchar(32);
-
-	temp = %char(1000000000000000000 + input);
-	temp = %subst(temp:%len(temp)-packLen+1);
-	temp = 'x''' + temp + 'F''';
-
-	return temp;
-
-end-proc;
-
-
 /* -------------------------------------------------------------------- *\ 
    	returns sum of x and y
 
-	http://sandbox.icebreak.org:60060/router?payload={
+	http://my_ibm_i:60060/router?payload={
 		"action":"msSimple.sum",
 		"x": 123,
 		"y": 456
@@ -114,10 +76,9 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	division - can it handle divide by zero? 
 
-	http://sandbox.icebreak.org:60060/router?payload={
-		"action":"msSimple.divide",
+	http://my_ibm_i:60060/router/msSimple/divide?payload={
 		"x": 125,
-		"y": 5
+		"y": 10
 	}
 
 \* -------------------------------------------------------------------- */
@@ -144,9 +105,9 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	List products
 
-	http://sandbox.icebreak.org:60060/router?payload={
-		"action":"msSimple.products"
-	}
+
+	http://my_ibm_i:60060/router/msSimple/products?payload={}
+
 
 \* -------------------------------------------------------------------- */
 dcl-proc products export;
@@ -161,13 +122,13 @@ dcl-proc products export;
    
 	sqlStmt = (`
 		select * 
-		from product
+		from icproduct
 	`);
 
 	pResultSet = json_sqlResultSet   (
 		sqlStmt
 		: 1
-		: 2000
+		: 5
 		: JSON_META + JSON_TOTALROWS
 	);
 
