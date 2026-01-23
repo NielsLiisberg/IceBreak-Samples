@@ -64,22 +64,6 @@ end-proc;
 		"search" : "sony"
 	}
 
-	// "seneca" style
-	http://MY_IBM_I:60060/router?payload={
-		"action":"msProduct.getRows",
-		"start": 11,
-		"limit": 20,
-		"search" : "sony"
-	}
-
-	// "seneca" style
-	http://MY_IBM_I:60060/router?payload={
-		"action":"msProduct.getRows",
-		"start": 11,
-		"limit": 20,
-		"where" : "price > 200",
-		"sort"  : "price"
-	}
 \* -------------------------------------------------------------------- */
 dcl-proc getRows export;
 
