@@ -53,7 +53,7 @@ Ext.define("Mvvm.crud.view.Grid", {
 			fields: i_self.fields,
 			idProperty: i_self.idProperty,
 			proxy: {
-				url: i_self.url,
+				url: i_self.url + o_params.routes.getRows.path,
 				type: "ajax",
 				paramsAsJson: true,
 				$configStrict: false,
@@ -63,6 +63,7 @@ Ext.define("Mvvm.crud.view.Grid", {
 					totalProperty: "totalRows"
 				},
 				getMethod: function(request) {
+					// return o_params.routes.getRows.method
 					return "POST";
 				}
 			}
@@ -82,7 +83,7 @@ Ext.define("Mvvm.crud.view.Grid", {
 
 						var o_sorters = store.getSorters();
 
-						Ext.apply(o_extraParams, i_self.params.routes.getRows);
+						// Ext.apply(o_extraParams, i_self.params.routes.getRows);
 
 						var a_sort = [];
 						var s_sort = "";

@@ -26,41 +26,9 @@ dcl-proc main;
 	dcl-s pPayload       pointer;
 
 	pPayload = unpackParms();
-	if json_nodeType(pPayload) = JSON_ARRAY;
-		processTransactions(pPayload);
-	else;
-		processAction(pPayload);
-	endif;
-	cleanup(pPayload);
+	processAction(pPayload);
+	json_delete (pPayload);
 	return;
-
-end-proc;
-// --------------------------------------------------------------------  
-dcl-proc processTransactions;
-
-	dcl-pi *n;
-		pPayload pointer value;
-	end-pi;
-
-	dcl-ds iterTrans  	likeds(json_iterator);
-	dcl-s  pAction 		pointer;
-
-	// Transactions are transfered in chunks - and flushed pr. tranasaction type
-	// to let the undelying transaction provide have a clean response to work with.
-	// ( Chuncks are not used generic since export breaks )
-	setChunked(4096);
-
-	%>[<%
-	iterTrans = json_SetIterator(pPayload);
-	dow json_ForEach(iterTrans);
-		responseWrite(iterTrans.comma);
-		// pAction = json_nodeUnlink(iterTrans.this);
-		processAction(iterTrans.this);
-		// json_delete(pAction);
-		// flush each "chunk"
-		responseFlush();
-	enddo;
-	%>]<%
 
 end-proc;
 // --------------------------------------------------------------------  
@@ -81,7 +49,7 @@ dcl-proc processAction;
 			setStatus ('500 ' + json_getstr(pResponse: 'message'));
 			consoleLogjson(pResponse);
 		endif;
-		json_close(pResponse);
+		json_delete (pResponse);
 	endif;
 
 end-proc;
@@ -95,62 +63,32 @@ dcl-proc unpackParms;
 
 	dcl-s pPayload 		pointer;
 	dcl-s msg     		varchar(4096);
-	dcl-s callback     	varchar(512);
 
 
 	SetContentType('application/json; charset=utf-8');
 	SetEncodingType('*JSON');
-	json_setDelimiters('/\@[] ');
+	json_setDelimiters('/\@[] .{}''"$');
 	json_sqlSetOptions('{'             + // use dfault connection
 		'upperCaseColname: false,   '  + // set option for uppcase of columns names
 		'autoParseContent: true,    '  + // auto parse columns predicted to have JSON or XML contents
 		'sqlNaming       : false    '  + // use the SQL naming for database.table  or database/table
 	'}');
 
-	callback = reqStr('callback');
-	if (callback>'');
-		responseWrite (callback + '(');
-	endif;
-
 	if reqStr('payload') > '';
 		pPayload = json_ParseString(reqStr('payload'));
-	elseif getServerVar('REQUEST_METHOD') = 'POST';
+	else;
 		pPayload = json_ParseRequest();
 		if pPayload = *NULL;
 			pPayload = json_newObject(); // just an empty object;
 		endif;
-	else;
-		pPayload = *NULL;
-	endif;
-
-	if pPayload = *NULL;
-		msg = json_message(pPayload);
-		%>{ "text": "Microservices. Ready for transactions. Please POST payload in JSON", "desc": "<%= msg %>"}<%
-		return *NULL;
 	endif;
 
 	return pPayload;
 
 
 end-proc;
-// -------------------------------------------------------------------------------------
-dcl-proc cleanup;
-	
-	dcl-pi *n;
-		pPayload pointer value;
-	end-pi;
-	dcl-s callback     	varchar(512);
-
-	json_close(pPayload);
-
-	callback = reqStr('callback');
-	if (callback > '');
-		responseWrite (')');
-	endif;
-
-end-proc;
 /* -------------------------------------------------------------------- *\ 
-   	run a a microservice call
+   	run a JSON-in/JSON-out microservice call
 \* -------------------------------------------------------------------- */
 dcl-proc runService export;	
 

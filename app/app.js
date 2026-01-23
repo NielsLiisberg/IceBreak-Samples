@@ -12,10 +12,10 @@ Ext.application({
 		title: "Microservice Demo",
 		router: "/router",
 		routes: {
-			meta     : {action:'MSproduct.getMetaData'},
- 			getRows  : {action:'MSproduct.getRows'},
-			delete   : {action:'MSproduct.delete'},
-			update   : {action:'MSproduct.update'}
+			meta     : { path: '/MSproduct/getMetaData', method: 'POST' },
+ 			getRows  : { path: '/MSproduct/getRows', method: 'POST' },
+			delete   : { path: '/MSproduct/delete', method: 'DELETE' },
+			update   : { path: '/MSproduct/update', method: 'PUT' }
 		}
 	},
 	viewport: null,
@@ -44,7 +44,7 @@ Ext.application({
 
 		var o_params = i_self.cfg;
 
-		var s_url = o_params.router;
+		var s_url = o_params.router ;
 		var s_title = o_params.title;
 
 		delete o_params.title;
@@ -56,7 +56,7 @@ Ext.application({
 				title: s_title,
 				fields: o_metaData.fields || [{name: "id", header: "ID",},{name: "name", header: "Name"}],
 				idProperty: o_metaData.idProperty || "id",
-				url: s_url,
+				url: s_url ,
 				params: o_params,
 				viewConfig: {
 					trackOver: true,
@@ -72,9 +72,11 @@ Ext.application({
 	getMetaData: function(s_url, o_params, f_callback) {
 
 		var i_self = this;
+		var o_metaRoute = o_params.routes.meta;
 		Ext.Ajax.request({
-			url: s_url,
-			jsonData: o_params.routes.meta ,
+			url: s_url + o_metaRoute.path,
+			method: o_metaRoute.method,
+			jsonData: {}, // o_params.routes.meta ,
 			success: function (response, request) {
 				var o_result = {};
 				eval('o_result =' + response.responseText);

@@ -194,7 +194,7 @@ dcl-proc update export;
 	// asume ok;
 	pOutput = json_parseString('{success:true}');
 
-	// Find the sql rodata within my input
+	// Find the sql rowdata within my input
 	pRow = json_locate (pInput : 'row');
 
 	ensureKey (pRow);

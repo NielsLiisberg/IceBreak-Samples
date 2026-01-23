@@ -106,11 +106,11 @@ Ext.define("Mvvm.crud.controller.Grid", {
 			o_json.row[i_record.idProperty] = 0;
 		}
 
-		Ext.apply(o_json, i_grid.params.routes.update);
+		var o_updateRoute = i_grid.params.routes.update;
 
 		Ext.Ajax.request({
-			url: i_grid.url,
-			method: "POST",
+			url: i_grid.url + o_updateRoute.path,
+			method: o_updateRoute.method,
 			jsonData: o_json,
 			success: function (response, request) {
 				i_window.close();
@@ -125,15 +125,14 @@ Ext.define("Mvvm.crud.controller.Grid", {
 		var i_grid = i_controller.getView();
 
 		var i_store = i_grid.getStore();
+		var o_deleteRoute = i_grid.params.routes.delete;
 		var o_params = {
 			key: i_record.get(i_record.idProperty)
 		};
 
-		Ext.apply(o_params, i_grid.params.routes.delete);
-
 		Ext.Ajax.request({
-			url: i_grid.url,
-			method: "POST",
+			url: i_grid.url + o_deleteRoute.path,
+			method: o_deleteRoute.method,
 			jsonData: o_params,
 			success: function (response, request) {
 				i_store.load();
