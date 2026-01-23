@@ -63,7 +63,9 @@ dcl-proc initialize;
 
 end-proc;
 /* -------------------------------------------------------------------- *\  
-   get pauload data form request and build JSON graph
+   get payload data form request and build JSON graph
+   note: for production use HTTP POST with JSON payload in body
+   not the URL GET parameter ?payload= but this is ok for testing
 \* -------------------------------------------------------------------- */
 dcl-proc unpackParms;
 
@@ -71,7 +73,6 @@ dcl-proc unpackParms;
 	end-pi;
 
 	dcl-s pPayload 		pointer;
-	dcl-s msg     		varchar(4096);
 
 	if reqStr('payload') > '';
 		pPayload = json_ParseString(reqStr('payload'));
@@ -88,6 +89,19 @@ dcl-proc unpackParms;
 end-proc;
 /* -------------------------------------------------------------------- *\ 
    	run a JSON-in/JSON-out microservice call
+	load the service program and procedure dynamically
+	based on the URL path, and call the procedure that will
+	be JSON-in/JSON-out. 
+
+	note: You could optimize by caching the pProc pointer
+	but the overhead of loadServiceProgramProc is minimal
+	compared to the actual service execution.
+
+	if  action <> prevAction;
+	   	prevAction = action;
+		pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
+	endif;
+
 \* -------------------------------------------------------------------- */
 dcl-proc runService export;	
 
@@ -111,8 +125,8 @@ dcl-proc runService export;
   	dcl-s len 			int(10);
 
 	// Get the action from the request URL
-	// Example: /router/msSimple/divide 
-	// gives msSimple as program and divide as procedure
+	// Example: /router/mySrvPgm/myProcedure 
+	// gives mySrvPgm as service program and myProcedure as procedure
 	// note: case insensitive: if you export your procedure as DCLCASE 
 	// The do not use the strUpper on procName. 
 	action = strUpper(getServerVar('REQUEST_FULL_PATH'));
@@ -125,23 +139,13 @@ dcl-proc runService export;
 	// so no static binding is needed.
 	pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
 
-	// You could optimize by caching the pProc pointer
-	// but the overhead of loadServiceProgramProc is minimal
-	// compared to the actual service execution.
-	//  if  action <> prevAction;
-	//	   prevAction = action;
-	//     pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
-	//  endif;
-
 	if (pProc = *NULL);
 		pResponse= formatError (
 			'Invalid action: ' + action + ' or service not found'
 		);
 	else;
 		monitor;
-
-		pResponse = actionProc(pPayload);
-
+			pResponse = actionProc(pPayload);
 		on-error;                                     
 			soap_Fault(errText:errPgm:errList);    
 			pResponse =  formatError (
