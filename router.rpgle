@@ -1,6 +1,6 @@
-<%@ language="RPGLE" runasowner="*YES" owner="QPGMR"%>
+<%@ language="RPGLE" %>
 <%
-ctl-opt copyright('System & Method (C), 2019');
+ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
 
@@ -14,6 +14,7 @@ ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
    By     Date       PTF     Description
    ------ ---------- ------- ---------------------------------------------------
    NLI    10.05.2019         New program
+   NLI    23.01.2026         Refactored for REST only (no Seneca)
    ----------------------------------------------------------------------------- */
  /include qasphdr,jsonparser
  /include qasphdr,iceutility
@@ -22,25 +23,15 @@ ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
 // Main line:
 // --------------------------------------------------------------------
 dcl-proc main;
-
-	dcl-s pPayload       pointer;
-
-	pPayload = unpackParms();
-	processAction(pPayload);
-	json_delete (pPayload);
-	return;
-
-end-proc;
-// --------------------------------------------------------------------  
-dcl-proc processAction;	
-
-	dcl-pi *n;
-		pAction pointer value;
-	end-pi;
 	
 	dcl-s pResponse		pointer;		
+	dcl-s pPayload       pointer;
 
-	pResponse = runService (pAction);
+	initialize(); 
+
+	pPayload = unpackParms();
+
+	pResponse = runService (pPayload);
 	if (pResponse = *NULL);
 		responseWrite('null');
 	else;
@@ -49,21 +40,17 @@ dcl-proc processAction;
 			setStatus ('500 ' + json_getstr(pResponse: 'message'));
 			consoleLogjson(pResponse);
 		endif;
-		json_delete (pResponse);
 	endif;
+
+on-exit; 
+	json_delete (pPayload);
+	json_delete (pResponse);
 
 end-proc;
 /* -------------------------------------------------------------------- *\  
-   get data form request
+   initialize the roundtrip
 \* -------------------------------------------------------------------- */
-dcl-proc unpackParms;
-
-	dcl-pi *n pointer;
-	end-pi;
-
-	dcl-s pPayload 		pointer;
-	dcl-s msg     		varchar(4096);
-
+dcl-proc initialize;
 
 	SetContentType('application/json; charset=utf-8');
 	SetEncodingType('*JSON');
@@ -73,6 +60,18 @@ dcl-proc unpackParms;
 		'autoParseContent: true,    '  + // auto parse columns predicted to have JSON or XML contents
 		'sqlNaming       : false    '  + // use the SQL naming for database.table  or database/table
 	'}');
+
+end-proc;
+/* -------------------------------------------------------------------- *\  
+   get pauload data form request and build JSON graph
+\* -------------------------------------------------------------------- */
+dcl-proc unpackParms;
+
+	dcl-pi *n pointer;
+	end-pi;
+
+	dcl-s pPayload 		pointer;
+	dcl-s msg     		varchar(4096);
 
 	if reqStr('payload') > '';
 		pPayload = json_ParseString(reqStr('payload'));
@@ -93,70 +92,63 @@ end-proc;
 dcl-proc runService export;	
 
 	dcl-pi *n pointer;
-		pActionIn pointer value options (*string);
+		pPayload pointer value;
 	end-pi;
 
-	dcl-pr ActionProc pointer extproc(pProc);
+	dcl-pr actionProc pointer extproc(pProc);
 		payload pointer value;
 	end-pr;
 	
-	dcl-s Action  		varchar(128);
+	dcl-s pResponse		pointer;		
+	dcl-s action  		varchar(128);
 	dcl-s prevAction  	varchar(128) static;
 	dcl-s pgmName 		char(10);
 	dcl-s procName 		varchar(128);
 	dcl-s pProc			pointer (*PROC) static;
-	dcl-s pAction       pointer;
-	dcl-s pResponse		pointer;		
 	dcl-s errText  		char(128);
 	dcl-s errPgm   		char(64);
 	dcl-s errList 		char(4096);
-  dcl-s len 			int(10);
+  	dcl-s len 			int(10);
 
+	// Get the action from the request URL
+	// Example: /router/msSimple/divide 
+	// gives msSimple as program and divide as procedure
+	// note: case insensitive: if you export your procedure as DCLCASE 
+	// The do not use the strUpper on procName. 
+	action = strUpper(getServerVar('REQUEST_FULL_PATH'));
+	len = words(action:'/');
+	pgmName  = word (action:len-1:'/');
+	procName = word (action:len:'/');
 
-// will return the same pointer id action is already a parse object
-	pAction = json_parseString(pActionIn);
-
-	action   = json_GetStr(pAction:'action');
-	if (action <= '');
-		action = strUpper(getServerVar('REQUEST_FULL_PATH'));
-		len = words(action:'/');
-		pgmName  = word (action:len-1:'/');
-		procName = word (action:len:'/');
-	else;
-
-		//if  action <> prevAction;
-		//	prevAction = action;
-		action = strUpper(action);
-		pgmName  = word (action:1:'.');
-		procName = word (action:2:'.');
-	endif;
-
-	//if  action <> prevAction;
-	//	prevAction = action;
+	// Now the IceBreak magic: 
+	// Dynamically load the service program and procedure
+	// so no static binding is needed.
 	pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
-	//endif;
+
+	// You could optimize by caching the pProc pointer
+	// but the overhead of loadServiceProgramProc is minimal
+	// compared to the actual service execution.
+	//  if  action <> prevAction;
+	//	   prevAction = action;
+	//     pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
+	//  endif;
 
 	if (pProc = *NULL);
-		pResponse= FormatError (
+		pResponse= formatError (
 			'Invalid action: ' + action + ' or service not found'
 		);
 	else;
 		monitor;
 
-		pResponse = ActionProc(pAction);
+		pResponse = actionProc(pPayload);
 
 		on-error;                                     
 			soap_Fault(errText:errPgm:errList);    
-			pResponse =  FormatError (
+			pResponse =  formatError (
 				'Error in service ' + action + ', ' + errText
 			);
 		endmon;                                       	
 
-	endif;
-
-	// if my input was a jsonstring, i did the parse and i have to cleanup
-	if pAction <> pActionIn;
-		json_delete (pAction);
 	endif;
 
 	return pResponse; 
@@ -166,7 +158,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    JSON error monitor 
 \* -------------------------------------------------------------------- */
-dcl-proc FormatError export;
+dcl-proc formatError export;
 
 	dcl-pi *n pointer;
 		description  varchar(256) const options(*VARSIZE);
