@@ -11,6 +11,8 @@ ctl-opt bndDir('NOXDB' );
   By     Date       PTF     Description
   ------ ---------- ------- ---------------------------------------------------
   NLI    22.06.2019         New program
+  NLI	 15.11.2022         Refactored for noxDB JSON features
+  NLI	 26.01.2026         Gracefull error + cleanup 
   ----------------------------------------------------------------------------- */
  /include noxDB
  /include qasphdr,iceUtility
@@ -26,7 +28,7 @@ ctl-opt bndDir('NOXDB' );
 	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
 
 	// Rest style
-	http://MY_IBM_I:60060/router/msProduct/simple?payload={}
+	http://MY_IBM_I:60060/router/msProduct/simple
 
 	
 \* -------------------------------------------------------------------- */
@@ -256,9 +258,8 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	Get the table metadata: columns and types
 
-	http://sandbox.icebreak.org:60060/router?payload={
-		"action":"msProduct.getMetadata"
-	}
+	http://my_ibm_i:60060/router/MSproduct/getMetaData
+	
 
 \* -------------------------------------------------------------------- */
 dcl-proc getMetadata export;
