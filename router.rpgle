@@ -35,11 +35,11 @@ dcl-proc main;
 	if (pResponse = *NULL);
 		responseWrite('null');
 	else;
-		responseWriteJson(pResponse);
 		if json_getstr(pResponse : 'success') = 'false';
-			setStatus ('500 ' + json_getstr(pResponse: 'message'));
+			setStatus ('500 ' + json_getstr(pResponse: 'msg'));
 			consoleLogjson(pResponse);
 		endif;
+		responseWriteJson(pResponse);
 	endif;
 
 on-exit; 

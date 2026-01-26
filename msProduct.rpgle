@@ -94,7 +94,7 @@ dcl-proc getRows export;
 		sqlStmt
 		: start + 1
 		: limit
-		: JSON_META + JSON_TOTALROWS
+		: JSON_META + JSON_TOTALROWS + JSON_GRACEFUL_ERROR
 	);
 
 
