@@ -5,7 +5,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello);
 
 /* -----------------------------------------------------------------------------
 
-	CRTICEPGM STMF('/www/IceBreak-Samples/hello.rpgle') SVRID(samples)
+	CRTICEPGM STMF('/www/IceBreak-Samples/hello1.rpgle') SVRID(samples)
 
    	Send greetings as a JSON object
 
