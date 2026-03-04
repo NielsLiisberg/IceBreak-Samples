@@ -103,7 +103,7 @@ end-proc;
 /* -------------------------------------------------------------------- *\ 
    	return a resulset from the SQL select 
 
-	here we use record leyer acces RLA - what ever you like, you are not "limted" to SQL.
+	here we use record level acces RLA - what ever you like, you are not "limted" to SQL.
 	
 	// Rest style
 	http://MY_IBM_I:60060/statRoute/statProd/classicrla
