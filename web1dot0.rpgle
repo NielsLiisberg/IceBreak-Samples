@@ -1,8 +1,17 @@
-﻿<%@ free="*YES"%>
-<%
+﻿**free
+//<%@ language="RPGLE" %>
+ctl-opt copyright('System & Method (C), 2019-2026');
 /* -------------------------------------------------------------------------------- *\
 
 	Super simple web 1.0 CURD application...
+
+	This sample shows how to build a simple web 1.0 application with CRUD (Create, Read, Update, Delete) functionality. 
+	It uses a simple HTML form and table to display and edit data from an IBM i database file. 
+	The application is built using RPGLE.
+
+	It demonstrates the IceBreak render engine and precompiler features.
+	
+	.. It can com in handy from timeto time how to handle HTTP requests, interact with a database file, and generate HTML responses.
 
 	Public test:
 
@@ -21,7 +30,6 @@ dcl-f updFile
 	rename(PRODUCTR:updRec);
 
 dcl-f listFile  
-	disk(*ext) 
 	extdesc('ICPRODUCT') 
 	keyed 
 	infds(InfoDS) 

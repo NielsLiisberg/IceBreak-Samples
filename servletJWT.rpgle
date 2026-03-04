@@ -1,5 +1,5 @@
-﻿<%@ language="RPGLE" pgmtype="SRVPGM" pgmopt="export(*ALL)" %><%
-**FREE
+﻿**free
+//<%@ language="RPGLE" pgmtype="SRVPGM" pgmopt="export(*ALL)" %>
 ctl-opt nomain;
 ctl-opt copyright('System & Method A/S (C) sitemule, 2021');
 ctl-opt decEdit('0,') datEdit(*YMD.);
@@ -69,9 +69,9 @@ ctl-opt thread(*CONCURRENT);
 //   --------------------------------------------------------------------------------------------------------------
 
 // Note!! You need to use the servlet headers - NO IceBreak call back are allowed here
-// Look in  qAspHdr,servlet fro all API's available
-/include qAspHdr,servlet
-/include qAspHdr,jsonParser
+// Look in  qrpgleref,servlet fro all API's available
+/include qrpgleref,servlet
+/include qrpgleref,jsonParser
 /include qsysinc/qrpglesrc,qusec
 /include 'headers/jwt_h.rpgle'
 /include 'headers/servletJWT_h.rpgle'

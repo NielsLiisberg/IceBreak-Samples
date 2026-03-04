@@ -1,7 +1,6 @@
-﻿<%@ language="RPGLE" %>
-<%
-**free
-ctl-opt copyright('System & Method (C), 2019');
+﻿**free
+//<%@ language="RPGLE" %>
+ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 
 /*  -----------------------------------------------------------------------------
@@ -26,7 +25,7 @@ ctl-opt decEdit('0,') datEdit(*YMD.) main(main);
 	NLI    22.06.2019         New program
 	----------------------------------------------------------------------------- */
  /include noxDB
- /include qasphdr,iceUtility
+ /include qrpgleref,iceUtility
  
 dcl-proc main;
 

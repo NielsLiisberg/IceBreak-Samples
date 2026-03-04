@@ -9,7 +9,10 @@ exec sql set option commit=*NONE;
 	CRTICEPGM STMF('/www/IceBreak-Samples/prodList.rpgle') SVRID(samples)
 
    	Send a product list to a client
-	Perhaps look at NoxDb for a more cool solution. 
+	
+	You can use the IceBreak render engine to produce JSON, XML, HTML or whatever you like.
+	However, I will suggest that you use the JSON capabilities of noxDb in IceBreak to
+	produce JSON, as it will take care of all the escaping and formatting for you. 
 	   
 	http://sandbox.icebreak.org:60060/prodList.rpgle?search=silver
 	http://my_ibm_i:60060/prodList.rpgle?search=silver

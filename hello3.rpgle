@@ -1,6 +1,6 @@
-<%@ language="RPGLE" free="true" %>
-<%
-ctl-opt copyright('System & Method (C), 2019');
+**free
+//<%@ language="RPGLE"%>
+ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(sayHello); 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------

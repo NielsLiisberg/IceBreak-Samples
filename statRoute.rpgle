@@ -1,20 +1,30 @@
 **free
-//<%@ language="RPGLE" %>
+//<%@ language="RPGLE" pgmopt="BNDSRVPGM((STATPROD))"%>
 ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 ctl-opt bndDir('NOXDB':'ICEUTILITY');
 
 /* -----------------------------------------------------------------------------
-   Service . . . : microservice router
+   Service . . . : microservice - 
    Author  . . . : Niels Liisberg 
    Company . . . : System & Method A/S
   
-   CRTICEPGM STMF('/www/IceBreak-Samples/router.rpgle') SVRID(samples)
+   Static router. Alternative to the dynamic router in router.rpgle
+   Here the service program and procedure is static bound. 
+   but you can use the same service program and just change the procedure to call based on the URL path.
+
+   Note: we need a binding directory - and export procedure - this is 
+   similar to "normal" RPGLE service program but with the export procedure.
+
+   here we use the pgmopt="BNDSRVPGM((STATPROD))" on the compile optoin 
+   to bind the service program, but you can of course also 
+   use a binding directory and bind it there.
+
+   CRTICEPGM STMF('/www/IceBreak-Samples/statRoute.rpgle') SVRID(samples)
    
    By     Date       PTF     Description
    ------ ---------- ------- ---------------------------------------------------
-   NLI    10.05.2019         New program
-   NLI    23.01.2026         Refactored for REST only (no Seneca)
+   NLI    04.03.2026         New program
    ----------------------------------------------------------------------------- */
  /include qrpgleref,jsonparser
  /include qrpgleref,iceutility
@@ -77,19 +87,16 @@ dcl-proc unpackParms;
 
 end-proc;
 /* -------------------------------------------------------------------- *\ 
-   	run a JSON-in/JSON-out microservice call
-	load the service program and procedure dynamically
-	based on the URL path, and call the procedure that will
-	be JSON-in/JSON-out. 
+   	run a JSON-in/JSON-out service. but also handles 
+	"classic" calls into any program or service program 
 
-	note: You could optimize by caching the pProc pointer
-	but the overhead of loadServiceProgramProc is minimal
-	compared to the actual service execution.
+	the "runService" procedure is the heart of the router, 
+	it takes care of calling the right service program and 
+	procedure based on the URL path and the input payload.
 
-	if  action <> prevAction;
-	   	prevAction = action;
-		pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
-	endif;
+	This part is the only different part in the static router 
+	compared to the dynamic router in router.rpgle, where we 
+	load the service program and procedure dynamically based on the URL path.
 
 \* -------------------------------------------------------------------- */
 dcl-proc runService export;	
@@ -98,16 +105,31 @@ dcl-proc runService export;
 		pPayload pointer value;
 	end-pi;
 
-	dcl-pr actionProc pointer extproc(pProc);
-		payload pointer value;
+	// For simplicity we can put the prototypes for the service program procedures here 
+	// but you can of course put them in a copybook 
+	dcl-pr statprod_simple pointer extproc('SIMPLE');
+		pJsonInput 			pointer value;
 	end-pr;
-	
+
+	// When you use static binding you can of course just call the procedure directly without the need for the extproc prototype and loadServiceProgramProc
+	// that giesves you the fredom to use any parameter style you like 
+	// and make it perfect RPGLE with the right data types and parameters instead of just JSON in and JSON out. 
+	dcl-pr statprod_classic extproc('CLASSIC');
+		myInput  pointer;
+		myOutput pointer;
+		whatever varchar(128) const;
+	end-pr;
+
+	dcl-pr statprod_classicRLA extproc('CLASSICRLA');
+		myInput  pointer;
+		myOutput pointer;
+		whatever varchar(128) const;
+	end-pr;
+
 	dcl-s pResponse		pointer;		
 	dcl-s action  		varchar(128);
-	dcl-s prevAction  	varchar(128) static;
 	dcl-s pgmName 		char(10);
 	dcl-s procName 		varchar(128);
-	dcl-s pProc			pointer (*PROC) static;
 	dcl-s errText  		char(128);
 	dcl-s errPgm   		char(64);
 	dcl-s errList 		char(4096);
@@ -116,33 +138,54 @@ dcl-proc runService export;
 	// Get the action from the request URL
 	// Example: /router/mySrvPgm/myProcedure 
 	// gives mySrvPgm as service program and myProcedure as procedure
-	// note: case insensitive: if you export your procedure as DCLCASE 
-	// The do not use the strUpper on procName. 
+	// Note: in this static router example we will not load the service program and procedure dynamically
+	// but just use the URL to decide which procedure to call.
 	action = strUpper(getServerVar('REQUEST_FULL_PATH'));
 	len = words(action:'/');
 	pgmName  = word (action:len-1:'/');
 	procName = word (action:len:'/');
 
-	// Now the IceBreak magic: 
-	// Dynamically load the service program and procedure
-	// so no static binding is needed.
-	pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
+	monitor;
+		select;
 
-	if (pProc = *NULL);
-		pResponse= formatError (
-			'Invalid action: ' + action + ' or service not found'
+			// JSON in / JSON out procedure
+			when pgmName = 'STATPROD' and procName = 'SIMPLE';
+				pResponse =  statprod_simple(pPayload); 
+
+			// We can prepare the response JSON object before calling the classic RPGLE procedure 
+			// and pass it as a parameter, so the procedure can fill it with data and status.
+			when pgmName = 'STATPROD' and procName = 'CLASSIC';
+				pResponse = json_newObject(); 
+				json_setStr(pResponse : 'someStuff' : 'What ever');
+				
+				json_moveObjectInto(pResponse : 'parse' : 
+					json_parseString('{"inputFromRequest": "This is some input data from the request that we move into the response as an example of how to pass data into the classic RPGLE procedure"}')
+				); // move the request into the output parameter as an "eye-catcher"
+
+				statprod_classic(
+					pPayload : 
+					pResponse : 
+					'Hello, World!'
+				);
+
+			// Here we let the classic RPGLE procedure prepare the whole response, 
+			// so we just pass an null pointer and let the procedure fill it with data and status.
+			when pgmName = 'STATPROD' and procName = 'CLASSICRLA';
+				statprod_classicRLA(
+					pPayload : 
+					pResponse : 
+					'Hello, World!'
+				);
+			other;
+				pResponse = formatError('Unknown service program in URL: ' + action); 
+		endsl;
+
+	on-error;                                     
+		soap_Fault(errText:errPgm:errList);    
+		pResponse = formatError (
+			'Error in service ' + action + ', ' + errText
 		);
-	else;
-		monitor;
-			pResponse = actionProc(pPayload);
-		on-error;                                     
-			soap_Fault(errText:errPgm:errList);    
-			pResponse =  formatError (
-				'Error in service ' + action + ', ' + errText
-			);
-		endmon;                                       	
-
-	endif;
+	endmon;                                       	
 
 	return pResponse; 
 
@@ -191,6 +234,7 @@ dcl-proc formatError export;
 
 	consoleLog(msg);
 	return pMsg;
+
 
 end-proc;
 /* -------------------------------------------------------------------- *\ 

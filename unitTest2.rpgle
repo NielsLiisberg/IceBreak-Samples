@@ -1,6 +1,6 @@
-<%@ language="RPGLE" runasowner="*YES" owner="QPGMR"%>
-<%
-ctl-opt copyright('System & Method (C), 2019');
+**free	
+//<%@ language="RPGLE" runasowner="*YES" owner="QPGMR"%>
+ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
 ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
 
@@ -16,7 +16,7 @@ ctl-opt bndDir('NOXDB':'ICEUTILITY':'QC2LE');
    NLI    10.05.2019         New program
    ----------------------------------------------------------------------------- */
  /include noxdb 
- /include qasphdr,iceutility
+ /include qrpgleref,iceutility
  
 // --------------------------------------------------------------------
 // Main line:

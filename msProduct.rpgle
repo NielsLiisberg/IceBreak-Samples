@@ -1,6 +1,6 @@
-<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
-<%
-ctl-opt copyright('System & Method (C), 2019-2022');
+**free
+//<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
+ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
 /* -----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ ctl-opt bndDir('NOXDB' );
   NLI	 26.01.2026         Gracefull error + cleanup 
   ----------------------------------------------------------------------------- */
  /include noxDB
- /include qasphdr,iceUtility
+ /include qrpgleref,iceUtility
 
 /* -------------------------------------------------------------------- *\ 
    	return a resulset from the SQL select 

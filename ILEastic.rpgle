@@ -1,7 +1,9 @@
-**FREE
-
+**free
+//<%@ language="RPGLE"%>
 ///
-// Integration between IceBreak and ILEastric
+// Integration between IceBreak and ILEastic - a HTTP server for IBM i written in ILE RPG.
+// Note the port and other configs are inherited from IceBreak. 
+// We simply just need to provide a "empty" config structure 
 //
 //
 // Start it:
@@ -14,15 +16,13 @@
 //        multithreading. Each client request is handled by a seperate thread.
 ///
    
-ctl-opt copyright('Sitemule.com  (C), 2018');
+ctl-opt copyright('Sitemule.com  (C), 2018-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) ;
-ctl-opt debug(*yes) bndDir('ILEASTIC':'NOXDB':'ICEMAN');
+ctl-opt debug(*yes) bndDir('ILEASTIC':'NOXDB');
 ctl-opt thread(*CONCURRENT);
 ctl-opt main(main);
 
-
 /include qrpgleref,ILEastic
-/include qrpgleref,iceman
 /include noxdb
 
 // -----------------------------------------------------------------------------
@@ -31,8 +31,6 @@ ctl-opt main(main);
 dcl-proc main;
 
     dcl-ds config likeds(IL_CONFIG);
-	im_getConfig(config);
-
 
     il_listen (config : %paddr(customerList));
  

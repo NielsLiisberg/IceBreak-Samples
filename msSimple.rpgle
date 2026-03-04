@@ -13,7 +13,7 @@ ctl-opt bndDir('NOXDB' );
   NLI    22.06.2019         New program
   ----------------------------------------------------------------------------- */
  /include noxDB
- /include qasphdr,iceUtility
+ /include qrpgleref,iceUtility
 
 
 /* -------------------------------------------------------------------- *\ 

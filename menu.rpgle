@@ -1,5 +1,5 @@
-<%@ free="*YES" language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
-<%
+**free
+//<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 /* ----------------------------------------------------------------------------------------
  * Copyright [2018] [System & Method A/S]                                          
  *                                                                                          
@@ -35,15 +35,15 @@
  
  * ---------------------------------------------------------------------------------------- */
 ctl-opt nomain; 
-ctl-opt copyright('System & Method (C), 2019');
+ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.); 
 ctl-opt bndDir('ICEBREAK' : 'EXTUTILITY');
 ctl-opt debug(*yes);
 
-/Include qAspHdr,IceBreak
-/Include qAspHdr,IceUtility
-/Include qAspHdr,jsonParser
-/Include qAspHdr,ExtUtility
+/Include qrpgleref,IceBreak
+/Include qrpgleref,IceUtility
+/Include qrpgleref,jsonParser
+/Include qrpgleref,ExtUtility
 
 /* 	-------------------------------------------------------------------- 
 
