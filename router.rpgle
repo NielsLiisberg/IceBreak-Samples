@@ -26,7 +26,7 @@ ctl-opt bndDir('NOXDB':'ICEBREAK':'ICEUTILITY');
 dcl-proc main;
 	
 	dcl-s pResponse		pointer;		
-	dcl-s pPayload       pointer;
+	dcl-s pPayload      pointer;
 
 	initialize(); 
 	pPayload = unpackParms();
