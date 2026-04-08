@@ -2,36 +2,36 @@
 //<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
-ctl-opt bndDir('NOXDB' );
-/* -----------------------------------------------------------------------------
-
-  CRTICEPGM STMF('/www/IceBreak-Samples/msProduct.rpgle') SVRID(samples)
-
-
-  By     Date       PTF     Description
-  ------ ---------- ------- ---------------------------------------------------
-  NLI    22.06.2019         New program
-  NLI	 15.11.2022         Refactored for noxDB JSON features
-  NLI	 26.01.2026         Gracefull error + cleanup 
-  ----------------------------------------------------------------------------- */
- /include noxDB
+ctl-opt bndDir('NOXDB':'ICEUTILITY' );
+// -----------------------------------------------------------------------------
+//
+//  CRTICEPGM STMF('/www/IceBreak-Samples/msProduct.rpgle') SVRID(samples)
+//
+//
+//  By     Date       PTF     Description
+//  ------ ---------- ------- ---------------------------------------------------
+//  NLI    22.06.2019         New program
+//  NLI	 15.11.2022         Refactored for noxDB JSON features
+//  NLI	 26.01.2026         Gracefull error + cleanup 
+//  -----------------------------------------------------------------------------
+ /include qrpgleref,jsonParser
  /include qrpgleref,iceUtility
 
-/* -------------------------------------------------------------------- *\ 
-   	return a resulset from the SQL select 
-
-	use the the IceBreak sandbox at "sandbox.icebreak.org"
-	or configure your host table to have MY_IBM_I
-
-	Note the "payload" parameter on the URL is a IceBreak shortcut 
-	for a HTTP POST with the same payload.
-	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
-
-	// Rest style
-	http://MY_IBM_I:60060/router/msProduct/simple
-
-	
-\* -------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------  
+//   	return a resulset from the SQL select 
+//
+//	use the the IceBreak sandbox at "sandbox.icebreak.org"
+//	or configure your host table to have MY_IBM_I
+//
+//	Note the "payload" parameter on the URL is a IceBreak shortcut 
+//	for a HTTP POST with the same payload.
+//	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
+//
+//	// Rest style
+//	http://MY_IBM_I:60060/router/msProduct/simple
+//
+//	
+// -------------------------------------------------------------------------------
 dcl-proc simple export;
 
 	dcl-pi *n pointer;
@@ -49,24 +49,24 @@ dcl-proc simple export;
 
 end-proc;
 
-/* -------------------------------------------------------------------- *\ 
-   	return a resulset from the SQL select 
-
-	use the the IceBreak sandbox at "sandbox.icebreak.org"
-	or configure your host table to have MY_IBM_I
-
-	Note the "payload" parameter on the URL is a IceBreak shortcut 
-	for a HTTP POST with the same payload.
-	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
-
-	// Rest style
-	http://MY_IBM_I:60060/router/msProduct/getRows?payload={
-		"start": 11,
-		"limit": 20,
-		"search" : "sony"
-	}
-
-\* -------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------  
+//   	return a resulset from the SQL select 
+//
+//	use the the IceBreak sandbox at "sandbox.icebreak.org"
+//	or configure your host table to have MY_IBM_I
+//
+//	Note the "payload" parameter on the URL is a IceBreak shortcut 
+//	for a HTTP POST with the same payload.
+//	Only use the HTTP GET .. ?payload for test and debugging. Never in production.  
+//
+//	// Rest style
+//	http://MY_IBM_I:60060/router/msProduct/getRows?payload={
+//		"start": 11,
+//		"limit": 20,
+//		"search" : "sony"
+//	}
+//
+// -------------------------------------------------------------------------------
 dcl-proc getRows export;
 
 	dcl-pi *n pointer;
@@ -84,10 +84,10 @@ dcl-proc getRows export;
 	start   =  json_getNum(pInput : 'start' );
 	limit   =  json_getNum(pInput : 'limit' );
 
-	sqlStmt = (`
-		select * 
-		from icproduct
-	`);
+	sqlStmt = ('-
+		select * - 
+		from icproduct -
+	');
 
 	addWhereClause   ( sqlStmt : pInput);
 	addOrderByClause ( sqlStmt : pInput);
@@ -103,9 +103,9 @@ dcl-proc getRows export;
 	return pResultSet;
 
 end-proc;
-/* -------------------------------------------------------------------- *\
-   Normal proccedure for adding the " order by " clause to the sql 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+//   Normal proccedure for adding the " order by " clause to the sql 
+// -------------------------------------------------------------------------------
 dcl-proc addOrderByClause;
 
 	dcl-pi *N;
@@ -124,9 +124,9 @@ dcl-proc addOrderByClause;
 
 
 end-proc;
-/* -------------------------------------------------------------------- *\
-   Normal proccedure for adding the " order by " clause to the sql 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+//   Normal proccedure for adding the " order by " clause to the sql 
+// -------------------------------------------------------------------------------
 dcl-proc addWhereClause;
 
 	dcl-pi *n;
@@ -164,9 +164,9 @@ dcl-proc addWhereClause;
 	endif;
 
 end-proc;
-/* -------------------------------------------------------------------- *\
-   update row 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+//   update row 
+// -------------------------------------------------------------------------------
 dcl-proc update export;
 
 	dcl-pi *n pointer;
@@ -202,10 +202,10 @@ dcl-proc update export;
 	return pOutput;
 
 end-proc;
-/* -------------------------------------------------------------------- *\
-   if the key is null, it is a insert operation
-   then find the next key 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+//   if the key is null, it is a insert operation
+//   then find the next key 
+// -------------------------------------------------------------------------------
 dcl-proc ensureKey;
 
 	dcl-pi *n;
@@ -225,9 +225,9 @@ dcl-proc ensureKey;
 	endif;
 
 end-proc;
-/* -------------------------------------------------------------------- *\
-   delete row 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+//   delete row 
+// -------------------------------------------------------------------------------
 dcl-proc delete export;
 
 	dcl-pi *n pointer;
@@ -255,13 +255,13 @@ dcl-proc delete export;
 
 end-proc;
 
-/* -------------------------------------------------------------------- *\ 
-   	Get the table metadata: columns and types
-
-	http://my_ibm_i:60060/router/MSproduct/getMetaData
-	
-
-\* -------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------  
+//   	Get the table metadata: columns and types
+//
+//	http://my_ibm_i:60060/router/MSproduct/getMetaData
+//	
+//
+// -------------------------------------------------------------------------------
 dcl-proc getMetadata export;
 
 	dcl-pi *n pointer;

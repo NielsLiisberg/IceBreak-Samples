@@ -2,26 +2,26 @@
 //<%@ language="RPGLE" %>
 ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
-ctl-opt bndDir('NOXDB':'ICEUTILITY');
-
-/* -----------------------------------------------------------------------------
-   Service . . . : microservice router
-   Author  . . . : Niels Liisberg 
-   Company . . . : System & Method A/S
-  
-   CRTICEPGM STMF('/www/IceBreak-Samples/router.rpgle') SVRID(samples)
-   
-   By     Date       PTF     Description
-   ------ ---------- ------- ---------------------------------------------------
-   NLI    10.05.2019         New program
-   NLI    23.01.2026         Refactored for REST only (no Seneca)
-   ----------------------------------------------------------------------------- */
- /include qrpgleref,jsonparser
+ctl-opt bndDir('NOXDB':'ICEBREAK':'ICEUTILITY');
+//  -----------------------------------------------------------------------------
+//  Service . . . : microservice router
+//  Author  . . . : Niels Liisberg 
+//  Company . . . : System & Method A/S
+// 
+//  CRTICEPGM STMF('/www/IceBreak-Samples/router.rpgle') SVRID(samples)
+//  
+//  By     Date       PTF     Description
+//  ------ ---------- ------- ---------------------------------------------------
+//  NLI    10.05.2019         New program
+//  NLI    23.01.2026         Refactored for REST only (no Seneca)
+//  ----------------------------------------------------------------------------- 
+ /include qrpgleref,icebreak
  /include qrpgleref,iceutility
+ /include qrpgleref,jsonparser
  
-// --------------------------------------------------------------------
-// Main line:
-// --------------------------------------------------------------------
+//  ----------------------------------------------------------------------------- 
+//  Main line:
+//  ----------------------------------------------------------------------------- 
 dcl-proc main;
 	
 	dcl-s pResponse		pointer;		
@@ -37,9 +37,9 @@ on-exit;
 	json_delete (pResponse);
 
 end-proc;
-/* -------------------------------------------------------------------- *\  
-   initialize the roundtrip
-\* -------------------------------------------------------------------- */
+//  ----------------------------------------------------------------------------- 
+//  initialize the roundtrip
+//  ----------------------------------------------------------------------------- 
 dcl-proc initialize;
 
 	SetContentType('application/json; charset=utf-8');
@@ -52,11 +52,11 @@ dcl-proc initialize;
 	'}');
 
 end-proc;
-/* -------------------------------------------------------------------- *\  
-   get payload data form request and build JSON graph
-   note: for production use HTTP POST with JSON payload in body
-   not the URL GET parameter ?payload= but this is ok for testing
-\* -------------------------------------------------------------------- */
+//  ----------------------------------------------------------------------------- 
+//  get payload data form request and build JSON graph
+//  note: for production use HTTP POST with JSON payload in body
+//  not the URL GET parameter ?payload= but this is ok for testing
+//  ----------------------------------------------------------------------------- 
 dcl-proc unpackParms;
 
 	dcl-pi *n pointer;
@@ -76,22 +76,22 @@ dcl-proc unpackParms;
 	return pPayload;
 
 end-proc;
-/* -------------------------------------------------------------------- *\ 
-   	run a JSON-in/JSON-out microservice call
-	load the service program and procedure dynamically
-	based on the URL path, and call the procedure that will
-	be JSON-in/JSON-out. 
-
-	note: You could optimize by caching the pProc pointer
-	but the overhead of loadServiceProgramProc is minimal
-	compared to the actual service execution.
-
-	if  action <> prevAction;
-	   	prevAction = action;
-		pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
-	endif;
-
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+//  Run a JSON-in/JSON-out microservice call
+// 	load the service program and procedure dynamically
+// 	based on the URL path, and call the procedure that will
+// 	be JSON-in/JSON-out. 
+// 
+// 	note: You could optimize by caching the pProc pointer
+// 	but the overhead of loadServiceProgramProc is minimal
+// 	compared to the actual service execution.
+// 
+// 	if  action <> prevAction;
+// 	   	prevAction = action;
+// 		pProc = loadServiceProgramProc ('*LIBL': pgmName : procName);
+// 	endif;
+// 
+// -------------------------------------------------------------------- 
 dcl-proc runService export;	
 
 	dcl-pi *n pointer;
@@ -147,9 +147,9 @@ dcl-proc runService export;
 	return pResponse; 
 
 end-proc;
-/* -------------------------------------------------------------------- *\  
-   send response to client	
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+// send response to client	
+// --------------------------------------------------------------------
 dcl-proc sendResponse;
 
 	dcl-pi *n;
@@ -168,9 +168,9 @@ dcl-proc sendResponse;
 	endif;
 
 end-proc;
-/* -------------------------------------------------------------------- *\ 
-   JSON error monitor 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+// JSON error monitor 
+// -------------------------------------------------------------------- 
 dcl-proc formatError export;
 
 	dcl-pi *n pointer;
@@ -193,9 +193,9 @@ dcl-proc formatError export;
 	return pMsg;
 
 end-proc;
-/* -------------------------------------------------------------------- *\ 
-   JSON - success response 
-\* -------------------------------------------------------------------- */
+// -------------------------------------------------------------------- 
+// JSON - success response 
+// --------------------------------------------------------------------
 dcl-proc successTrue export;
 
 	dcl-pi *n pointer;

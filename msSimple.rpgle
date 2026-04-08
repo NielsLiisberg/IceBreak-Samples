@@ -1,30 +1,29 @@
-<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
-<%
+**free
+//<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
 ctl-opt bndDir('NOXDB' );
-/* -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// 
+// CRTICEPGM STMF('/www/IceBreak-Samples/msSimple.rpgle') SVRID(samples)
+// 
+// 
+// By     Date       PTF     Description
+// ------ ---------- ------- -------------------------------------------------
+// NLI    22.06.2019         New program
+// -----------------------------------------------------------------------------
+/include qrpgleref,jsonParser
+/include qrpgleref,iceUtility
 
-  CRTICEPGM STMF('/www/IceBreak-Samples/msSimple.rpgle') SVRID(samples)
 
-
-  By     Date       PTF     Description
-  ------ ---------- ------- ---------------------------------------------------
-  NLI    22.06.2019         New program
-  ----------------------------------------------------------------------------- */
- /include noxDB
- /include qrpgleref,iceUtility
-
-
-/* -------------------------------------------------------------------- *\ 
-   	The mother of all samples: hellow world
-	   
-	http://my_ibm_i:60060/router/msSimple/Hello?payload={
-		"message":"My name is John"
-	}
-
-\* -------------------------------------------------------------------- */
-dcl-proc HelloWim export;
+// -----------------------------------------------------------------------------
+// The mother of all samples: hellow world
+//	   
+//	http://my_ibm_i:60060/router/msSimple/Hello?payload={"message":"My name is John"}
+//
+//
+// -----------------------------------------------------------------------------
+dcl-proc Hello export;
 
 	dcl-pi *n pointer;
 		pInput 			pointer value;
@@ -43,16 +42,12 @@ dcl-proc HelloWim export;
 	return pOutput;
 
 end-proc;
-/* -------------------------------------------------------------------- *\ 
-   	returns sum of x and y
-
-	http://my_ibm_i:60060/router?payload={
-		"action":"msSimple.sum",
-		"x": 123,
-		"y": 456
-	}
-
-\* -------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------
+// returns sum of x and y
+//
+//	http://my_ibm_i:60060/router/msSimple/sum?payload={"x":123,"y":456}
+//
+// -----------------------------------------------------------------------------
 dcl-proc sum export;
 
 	dcl-pi *n pointer;
@@ -73,15 +68,12 @@ dcl-proc sum export;
 	return pOutput;
 
 end-proc;
-/* -------------------------------------------------------------------- *\ 
-   	division - can it handle divide by zero? 
-
-	http://my_ibm_i:60060/router/msSimple/divide?payload={
-		"x": 125,
-		"y": 10
-	}
-
-\* -------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------
+// Division - can it handle divide by zero? 
+//
+// http://my_ibm_i:60060/router/msSimple/divide?payload={"x":125,"y":10}
+//
+// -----------------------------------------------------------------------------
 dcl-proc divide export;
 
 	dcl-pi *n pointer;
@@ -102,14 +94,15 @@ dcl-proc divide export;
 	return pOutput;
 
 end-proc;
-/* -------------------------------------------------------------------- *\ 
-   	List products
-
-
-	http://my_ibm_i:60060/router/msSimple/products?payload={}
-
-
-\* -------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------
+// List products
+// 
+// Give me the five first rows, starting with row number 1, 
+// and also give me the metadata (columns and types) and the total number of rows in the table
+//
+//	http://my_ibm_i:60060/router/msSimple/products
+//
+// -----------------------------------------------------------------------------
 dcl-proc products export;
 
 	dcl-pi *n pointer;
@@ -118,12 +111,11 @@ dcl-proc products export;
 
 	dcl-s  pResultSet     	pointer;
 	dcl-s  sqlStmt        	varchar(4096);
-
    
-	sqlStmt = (`
-		select * 
-		from icproduct
-	`);
+	sqlStmt = ('-
+		select * -
+		from icproduct -
+	');
 
 	pResultSet = json_sqlResultSet   (
 		sqlStmt
@@ -132,10 +124,7 @@ dcl-proc products export;
 		: JSON_META + JSON_TOTALROWS
 	);
 
-
 	return pResultSet;
 
 end-proc;
-
-
 
