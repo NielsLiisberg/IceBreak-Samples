@@ -2,6 +2,7 @@
 //<%@ language="RPGLE" %>
 ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
+ctl-opt option(*nodebugio:*srcstmt:*nounref);
 ctl-opt bndDir('NOXDB':'ICEBREAK':'ICEUTILITY');
 //  -----------------------------------------------------------------------------
 //  Service . . . : microservice router

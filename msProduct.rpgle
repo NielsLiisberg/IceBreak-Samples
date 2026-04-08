@@ -2,6 +2,7 @@
 //<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
+ctl-opt option(*nodebugio:*srcstmt:*nounref);
 ctl-opt bndDir('NOXDB':'ICEUTILITY' );
 // -----------------------------------------------------------------------------
 //

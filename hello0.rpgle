@@ -2,6 +2,7 @@
 //<%@ language="RPGLE"%>
 ctl-opt copyright('System & Method (C), 2019-2026');
 ctl-opt decEdit('0,') datEdit(*YMD.) main(main); 
+ctl-opt option(*nodebugio:*srcstmt:*nounref);
 ctl-opt bndDir('ICEBREAK':'ICEUTILITY');
 // -----------------------------------------------------------------------------
 //
@@ -20,8 +21,8 @@ ctl-opt bndDir('ICEBREAK':'ICEUTILITY');
 
 dcl-proc main;
 	
-	dcl-s  message      varchar(256);
-	dcl-s I	int(5);
+	dcl-s message      	varchar(256);
+	dcl-s i         	int(5);
 	  
 	// Get the data from the URL
 	message = qryStr('message');

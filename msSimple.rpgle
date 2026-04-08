@@ -2,6 +2,7 @@
 //<%@ language="RPGLE" pgmtype="srvpgm" pgmopt="export(*ALL)" %>
 ctl-opt copyright('System & Method (C), 2019');
 ctl-opt decEdit('0,') datEdit(*YMD.) nomain; 
+ctl-opt option(*nodebugio:*srcstmt:*nounref);
 ctl-opt bndDir('NOXDB' );
 // -----------------------------------------------------------------------------
 // 
@@ -14,7 +15,6 @@ ctl-opt bndDir('NOXDB' );
 // -----------------------------------------------------------------------------
 /include qrpgleref,jsonParser
 /include qrpgleref,iceUtility
-
 
 // -----------------------------------------------------------------------------
 // The mother of all samples: hellow world
