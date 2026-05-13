@@ -31,7 +31,6 @@ Now back to your ACS:
 
 1) Click SSH Terminal in ACS ( or use your default terminal like putty) 
 
-(or you can use call qp2term – but I suggest that you get use to ssh)
 
 2) From the terminal. You can also install git with yum from the commandline if you don't like the above:  
 ```
@@ -45,6 +44,13 @@ cd /www
 git -c http.sslVerify=false clone https://github.com/NielsLiisberg/IceBreak-Samples.git
 ```
 As you can see - you have to ajust your path to use yum, git and other opens source tooling  
+
+You can also use QSH or call qp2term instead of SSH, but then file modes in git can differ, so you need to run 
+```bash
+git config core.fileMode false
+```
+.. so I suggest that you get use to ssh)
+
 
 Go back to a 5250 prompt
 ```
