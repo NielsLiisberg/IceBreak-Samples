@@ -1,8 +1,14 @@
-﻿cl: CRTSRCPF FILE(SAMPLES/QRPGLESRC) RCDLEN(150) TEXT('iceBreak samples source');
-
-begin 
+﻿begin 
     declare file_name varchar(256);
+
+    -- Build the QRPGLESRC source file if it does not exists     
+    begin
+		declare continue handler for sqlexception begin end;
+		call qcmdexc ('CRTSRCPF FILE(SAMPLES/QRPGLESRC) RCDLEN(150) TEXT(''iceBreak samples source'')');
+	end;
+
     
+    -- Copy all sources members to the QRPGLESRC source file
     for 
         select path_name
             from table(qsys2.ifs_object_statistics( 
