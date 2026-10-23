@@ -56,7 +56,7 @@
 			Se the ICEBREAK/QSAMPLE source file - ICESESSION for an example     
 	-->
 	<xxx_session 
-		exitPgm="SVCUDV/ICESESSION" 
+		exitPgm="MYLIB/ICESESSION" 
 		cookie="Version=1; Path=/; Discard; secure; HttpOnly"
 		encrypt="true"
 		encryptionKey="Life is good"
