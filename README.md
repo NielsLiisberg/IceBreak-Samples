@@ -103,6 +103,12 @@ The "router" program is always called if the URL begins with "router". It is a r
 Take a look at "router.rpgle" and "msProduct.rpgle" - they carry the whole secret!
 
 
+# Server exits and plugins
+
+The folder [server-exits](server-exits/README.md) has the programs the server calls itself:
+the default response (SVCDEFAULT), the session exit program, pre-request plugins (a session
+manager, an IP whitelist), a servlet, a web socket and a data queue sample.
+
 Happy IceBreak coding and keep me posted :)
 
 *Niels Liisberg.*
