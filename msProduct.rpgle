@@ -41,17 +41,21 @@ dcl-proc simple export;
 
 	dcl-s  pJsonOutput     	pointer;
     
-    pJsonOutput = json_sqlResultSet('-
-		select *         -
-		from icproduct    -
-	');
+    pJsonOutput = json_sqlResultSet('+
+			select *       	  +
+			from icproduct'
+		: 1
+		: JSON_ALLROWS
+		: JSON_META + JSON_TOTALROWS + JSON_GRACEFUL_ERROR 
+	
+	);
 
 	return pJsonOutput;
 
 end-proc;
 
 // -----------------------------------------------------------------------------  
-//   	return a resulset from the SQL select 
+// return a resulset from the SQL select 
 //
 //	use the the IceBreak sandbox at "sandbox.icebreak.org"
 //	or configure your host table to have MY_IBM_I
@@ -66,6 +70,8 @@ end-proc;
 //		"limit": 20,
 //		"search" : "sony"
 //	}
+
+// http://my_ibm_i:60060/router/msProduct/getRows?payload={"start":1,"limit":9999,"search":"sony"}
 //
 // -------------------------------------------------------------------------------
 dcl-proc getRows export;
